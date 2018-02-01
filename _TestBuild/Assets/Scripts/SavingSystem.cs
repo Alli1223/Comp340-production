@@ -6,8 +6,10 @@ using UnityEngine;
 
 public class SavingSystem : MonoBehaviour {
 
-	//! Use this for initialization
-	void Start () {
+    public bool saveOnExit = true;
+
+    //! Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -15,7 +17,28 @@ public class SavingSystem : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    // Function gets called when application closes
+    void OnApplicationQuit()
+    {
+        // if save on exit os on then save
+        if (saveOnExit)
+        {
+            Debug.Log("GAME SAVING..");
+            try
+            {
+                SaveLoad.Save();
+                Debug.Log("GAME SUCESSIVELY SAVED TO: " + Application.persistentDataPath);
+            }
+            catch
+            {
+                Debug.Log("ERROR SAVING GAME");
+            }
+        }
+    }
 }
+
+
 
 //! The data to be saved
 [System.Serializable]
@@ -25,6 +48,7 @@ public class Game
     public static Game currentGame;
     public PlayerManager player;
     public static List<MechIDConst> allMechs = new List<MechIDConst>();
+    public static List<EnemyData> allEnemies = new List<EnemyData>();
 
 
     //! Game constructor
@@ -57,11 +81,14 @@ public static class SaveLoad
     {
         if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
         {
+            Debug.Log("Loading Save Game ..");
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/savedGames.gd", FileMode.Open);
             SaveLoad.savedGames = (List<Game>)bf.Deserialize(file);
             file.Close();
         }
+        else
+            Debug.Log("Save game file does not exist");
     }
 }
 

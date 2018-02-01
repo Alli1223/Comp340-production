@@ -24,4 +24,11 @@ public class MenuFunctionality : MonoBehaviour
         
         SceneManager.LoadScene(index);
     }
+
+    public void LoadGameButton()
+    {
+        SaveLoad.Load();
+        Game saveGame;
+        saveGame = SaveLoad.savedGames;
+    }
 }
