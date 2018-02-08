@@ -90,5 +90,19 @@ public static class SaveLoad
         else
             Debug.Log("Save game file does not exist");
     }
+    public static Game GetLastSaveGame()
+    {
+        if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
+        {
+            Debug.Log("Loading Save Game ..");
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/savedGames.gd", FileMode.Open);
+            SaveLoad.savedGames = (List<Game>)bf.Deserialize(file);
+            file.Close();
+            return savedGames[0];
+        }
+        else
+            return null;
+    }
 }
 

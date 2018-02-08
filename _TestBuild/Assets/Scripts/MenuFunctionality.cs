@@ -28,7 +28,8 @@ public class MenuFunctionality : MonoBehaviour
     public void LoadGameButton()
     {
         SaveLoad.Load();
+        
         Game saveGame;
-        saveGame = SaveLoad.savedGames;
+        saveGame = SaveLoad.GetLastSaveGame();
     }
 }
