@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionPoint : MonoBehaviour
+public class ActionPointSystem : MonoBehaviour
 {
     // AP points
     public int APPoints = 0;
     public int maxAPpoints = 100;
-
 
 
     // set AP points to max at start
