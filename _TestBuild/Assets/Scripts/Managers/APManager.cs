@@ -24,8 +24,6 @@ public class APManager : MonoBehaviour
         {
             return false;
         }
-
-
     }
 
     public void AdjustPoints(Transform objectAP, int actionCost, string side)
