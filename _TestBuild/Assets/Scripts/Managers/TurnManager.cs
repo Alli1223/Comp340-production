@@ -9,14 +9,14 @@ public class TurnManager : MonoBehaviour
     public static TurnManager gTurn;
     private PlayerManager tPlayer;
 
-	public List<GameObject> waitForAction 
+    public List<GameObject> waitForAction 
 	{
 		get 
 		{
 			return waitingForAction;
 		}
 	}
-	private List<GameObject> waitingForAction = new List<GameObject>();
+    private List<GameObject> waitingForAction = new List<GameObject>();
 
 
     //Makes Grid gen script a singleton
@@ -39,31 +39,39 @@ public class TurnManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if (waitingForAction.Count == 0) 
-		{
-			playersTurn = !playersTurn;
-			Debug.Log ("Oh");
-		}
+//		if (waitingForAction.Count == 0) 
+//		{
+//			playersTurn = !playersTurn;
+//		}
 	}
 
-	public void AddToAction(GameObject startObj)
+    public void AddToAction(GameObject startObj)
 	{
-			waitingForAction.Add (startObj);
+		waitingForAction.Add (startObj);
 	}
 
-	public void AddMultipleToAction(List<GameObject> startObjs)
-	{
-		waitingForAction.AddRange (startObjs);
-	}
-
-	public virtual void AddMultipleToAction(GameObject[] startObjs)
+    public void AddToAction(List<GameObject> startObjs)
 	{
 		waitingForAction.AddRange (startObjs);
 	}
 
-	public void RemoveFromAction(GameObject finObj)
+    public virtual void AddToAction(GameObject[] startObjs)
+	{
+		waitingForAction.AddRange (startObjs);
+	}
+
+    public void RemoveFromAction(GameObject finObj)
 	{
 		waitingForAction.Remove (finObj);
+
+        if (waitingForAction.Count == 0)
+        {
+            ManagersManager.manager.tPlayer.EndTurn();
+        }
+        else
+        {
+            ManagersManager.manager.tPlayer.SelectUnitNotOutOfAction();
+        }
 	}
 
 }

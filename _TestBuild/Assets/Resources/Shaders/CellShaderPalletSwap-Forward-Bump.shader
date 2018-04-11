@@ -28,7 +28,7 @@
 
 			half4 c;
 
-			c.rgb = s.Albedo * _LightColor0.rgb * (NdotL * atten * 2);
+			c.rgb = s.Albedo * _LightColor0.rgb * clamp(NdotL * atten, 0.3, 1);
 			c.a = s.Alpha;
 
 			return c;
@@ -53,17 +53,18 @@
 		void surf(Input IN, inout SurfaceOutput o)
 		{
 			float4 c;
+			float4 newC;
 			float4 mask;
 
 			c = tex2D(_MainTex, IN.uv_MainTex);
 			mask = tex2D(_OverlayTex, IN.uv_OverlayTex);
 
-			float4 dc = (_Color1 * mask.r) + (_Color2 * mask.g) + (_Color3 * mask.b);
+			newC = _Color1;
+			newC = lerp(newC, _Color2, mask.g);
+			newC = lerp(newC, _Color3, mask.b);
 
-			float m = max(mask.r,mask.g);
-			m = max(m, mask.b);
+			c = lerp (c, newC, 1 - c.a);
 
-			c = lerp(c, dc, m * c.a);
 		 	o.Albedo = c;
 		 	o.Normal = UnpackNormal (tex2D(_NormalMap, IN.uv_NormalMap));
 		}

@@ -4,39 +4,21 @@ using UnityEngine;
 
 public class DamageDirection : MonoBehaviour {
 
-    private Transform Buidling;
-    private Transform player;
+    private Transform currentBuidling;
+    private GameObject currentPlayer;
     private Vector3 pos;
     private Vector3 dir;
-    public Vector3 FallDir;
-    public Vector3 east;
-    public Vector3 west;
-    public Vector3 north;
-    public Vector3 south;
+    public static Vector3 east;
+    public static Vector3 west;
+    public static Vector3 north;
+    public static Vector3 south;
+    public Vector3 fallDir = Directions.West;
 
-    void FixedUpdate()
+    public static Vector3 attackDirection()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("Pressed left click.");
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 100.0f))
-            {
-                Debug.Log("You selected the " + hit.transform.tag); // ensure you picked right object
-                if (hit.transform.tag == "Cover")
-                {
-                    attackDirection();
-                }
-            }
-        }
-    }
-
-    public Vector3 attackDirection()
-    {
-        Vector3 pos = Buidling.transform.position;
-        Vector3 dirt = (this.transform.position - Buidling.transform.position).normalized;//current mech
-        return dirt;
+        Vector3 fallDir = west;// Vector3.zero;
+		fallDir = CustomDirection(Destruction.markedBuilding.transform.position, ComparitiveDirection(Destruction.markedBuilding.transform.position, Destruction.attackingPlayer.transform.position));
+        return fallDir;
     }
 
     /// <summary>
@@ -46,10 +28,10 @@ public class DamageDirection : MonoBehaviour {
     /// <param name="initialObjPos">The building or object you wish to modify</param>
     /// <param name="secondaryObjPos">The Player or object you wish to modify</param>
     /// <returns></returns>
-    coverDirection ComparitiveDirection(Vector3 initialObjPos, Vector3 secondaryObjPos)
+    static coverDirection ComparitiveDirection(Vector3 initialObjPos, Vector3 secondaryObjPos)
     {
 
-        Vector3 dir = (secondaryObjPos - initialObjPos).normalized;//current mech
+        Vector3 dir = (secondaryObjPos - initialObjPos);//current mech
         coverDirection fallDir = coverDirection.NONE;
 
         if (Mathf.Abs(secondaryObjPos.x - initialObjPos.x) < Mathf.Abs(secondaryObjPos.z - initialObjPos.z))
@@ -84,7 +66,7 @@ public class DamageDirection : MonoBehaviour {
     /// <param name="objPosition">The position of the object you want an adjusted position of</param>
     /// <param name="posDir">The direction you want the object to move to</param>
     /// <returns></returns>
-    Vector3 CustomDirection(Vector3 objPosition, coverDirection posDir)
+    static Vector3 CustomDirection(Vector3 objPosition, coverDirection posDir)
     {
         if (posDir == coverDirection.North)
         {
@@ -104,7 +86,7 @@ public class DamageDirection : MonoBehaviour {
         }
         if (posDir == coverDirection.NONE)
         {
-            Debug.LogError("posDir was equal to None: " + "A direction that was entered some how is none of the directions of the compass. Send help");
+            Debug.LogError("posDir was equal to None: " + "A direction that was entered is none of the directions of the compass.");
             return Vector3.zero;
         }
         return Vector3.zero;

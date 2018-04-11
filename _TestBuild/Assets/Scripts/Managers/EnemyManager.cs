@@ -39,6 +39,7 @@ public class EnemyManager : MonoBehaviour
             x.GetComponent<TempEnemyVar> ().currentAP = 10;
 
 		}
+        EnemyUniqueIDAssignment();
 	}
 	bool addedToAction = false;
 	// Update is called once per frame
@@ -48,7 +49,7 @@ public class EnemyManager : MonoBehaviour
 		{
 			if (!addedToAction) 
 			{
-				tManage.tTurn.AddMultipleToAction (currentEnemies);
+                tManage.tTurn.AddToAction (currentEnemies);
 				foreach (GameObject x in currentEnemies) 
 				{
 					x.GetComponent<TempEnemyVar> ().moveDist = 6;
@@ -61,10 +62,14 @@ public class EnemyManager : MonoBehaviour
             {
                 if (tManage.tTurn.waitForAction.Count == 1)
                 {
+                    currentEnemy.GetComponent<TempEnemyVar> ().moveDist = 6;
+                    currentEnemy.GetComponent<TempEnemyVar>().currentAP = 10;
                     tManage.tTurn.RemoveFromAction(currentEnemy);
                 }
                 else
-                {					
+                {	
+                    currentEnemy.GetComponent<TempEnemyVar> ().moveDist = 6;
+                    currentEnemy.GetComponent<TempEnemyVar>().currentAP = 10;
                     tManage.tTurn.RemoveFromAction(currentEnemy);
                     currentEnemy = SelectNewEnemy(tManage.tTurn.waitForAction, currentEnemies);
                     Debug.Log(currentEnemy.name);
@@ -84,10 +89,14 @@ public class EnemyManager : MonoBehaviour
                 {
                     if (tManage.tTurn.waitForAction.Count == 1)
                     {
+                        currentEnemy.GetComponent<TempEnemyVar> ().moveDist = 6;
+                        currentEnemy.GetComponent<TempEnemyVar>().currentAP = 10;
                         tManage.tTurn.RemoveFromAction(currentEnemy);
                     }
                     else
-                    {                   
+                    {
+                        currentEnemy.GetComponent<TempEnemyVar> ().moveDist = 6;
+                        currentEnemy.GetComponent<TempEnemyVar>().currentAP = 10;
                         tManage.tTurn.RemoveFromAction(currentEnemy);
                         currentEnemy = SelectNewEnemy(tManage.tTurn.waitForAction, currentEnemies);
                     }
@@ -124,5 +133,21 @@ public class EnemyManager : MonoBehaviour
 		}
 		return newEnemy;
 	}
+
+    private void EnemyUniqueIDAssignment()
+    {
+        if (currentEnemies.Count == 0)
+        {
+            return;
+        }
+        int idNumerator = 0;
+        foreach (GameObject x in currentEnemies)
+        {
+            int uniqueID = (Random.Range(1, 9) * 1000) + idNumerator;
+            x.GetComponent<TempEnemyVar>().uniqueID = uniqueID;
+            x.name = "Enemy (ID:" + uniqueID + ")";
+            idNumerator++;
+        }
+    }
 
 }

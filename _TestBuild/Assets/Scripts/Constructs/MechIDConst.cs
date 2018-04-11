@@ -2,60 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.AI;
 
-[Serializable]
+
 public class MechIDConst : MonoBehaviour 
 {
-    [SerializeField]
-    public string displayName;
+    public MechData data;
 
-    [SerializeField]
-    public string assetNameHead;
-    [SerializeField]
-    public string assetNameUpperTorso;
-    [SerializeField]
-    public string assetNameLowerTorso;
-    [SerializeField]
-    public string assetNameLegs;
-    [SerializeField]
-    public string assetNameArms;
+    public int totalWeight { get; private set; }
+    public List<PassiveBonus> passiveBonuses { get; private set; }
+    public int totalAP { get; private set; }
+    public int totalArmor { get; private set; }
 
-    [SerializeField]
-    public int assetIDHead;
-    [SerializeField]
-    public int assetIDUpperTorso;
-    [SerializeField]
-    public int assetIDLowerTorso;
-    [SerializeField]
-    public int assetIDLegs;
-    [SerializeField]
-    public int assetIDArms;
 
-    [SerializeField]
-    public int weaponArmLType;
-    [SerializeField]
-    public int weaponArmLID;
-    [SerializeField]
-    public int weaponArmRType;
-    [SerializeField]
-    public int weaponArmRID;
-    [SerializeField]
-    public int weaponGimbalLType;
-    [SerializeField]
-    public int weaponGimbalLID;
-    [SerializeField]
-    public int weaponGimbalRType;
-    [SerializeField]
-    public int weaponGimbalRID;
-
-    [SerializeField]
-    public bool hasWeaponL;
-    [SerializeField]
-    public bool hasWeaponR;
-    [SerializeField]
-    public bool hasWeaponGimbalL;
-    [SerializeField]
-    public bool hasWeaponGimbalR;
 
     public Transform weaponMountL;
     public Transform weaponMountR;
@@ -107,68 +66,210 @@ public class MechIDConst : MonoBehaviour
 
     public static string AssetIDToNameLegs(int ID)
     {
-        return LTRigAssembler.AssetIDToNameLowerTorso(ID);
+        return LTRigAssembler.AssetIDToNameLegs(ID);
     }
 
     public static string AssetIDToNameLowerTorso(int ID)
     {
-        return LTRigAssembler.AssetIDToNameLegs(ID); 
+        return LTRigAssembler.AssetIDToNameLowerTorso(ID); 
     }
 
-    public static GameObject SpawnMech(Vector3 pos, Quaternion rot, int headID, int upperTorsoID, int lowerTorsoID, int armsID, int legsID,
-        int weaponTypeL, int weaponL, int weaponTypeR, int weaponR, int weaponGimbalTypeL, int weaponGimbalL,
-        int weaponGimbalTypeR, int weaponGimbalR)
+//    public static GameObject SpawnMech(Vector3 pos, Quaternion rot, int headID, int upperTorsoID, int lowerTorsoID, int armsID, int legsID,
+//        int weaponTypeL, int weaponL, int weaponTypeR, int weaponR, int weaponGimbalTypeL, int weaponGimbalL,
+//        int weaponGimbalTypeR, int weaponGimbalR)
+//    {
+//        Transform upperTorsoParent;
+//        Animator lowerTorsoAnim;
+//        GameObject lowerTorso = LTRigAssembler.Instance.AssembleLowerTorso(lowerTorsoID, legsID, pos, rot, out upperTorsoParent, out lowerTorsoAnim);
+//
+//        MechVisualAgent visualAgent = lowerTorso.AddComponent<MechVisualAgent>();
+//        PlayerData playerData = lowerTorso.AddComponent<PlayerData>();
+//
+//        visualAgent.mechID = lowerTorso.AddComponent<MechIDConst>();
+//        visualAgent.upperTorsoParent = upperTorsoParent;
+//
+//        UTRigAssembler.Instance.AssembleUpperTorso(upperTorsoID, armsID, headID, visualAgent.upperTorsoParent, 
+//            out visualAgent.weaponMountL, out visualAgent.weaponMountR, out visualAgent.shieldMountL, out visualAgent.shieldMountR,
+//            out visualAgent.weaponMountGimbalL, out visualAgent.weaponMountGimbalR);
+//
+//        GameObject go;
+//        if (visualAgent.mechID.data.hasWeaponL)
+//        {
+//            go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[weaponTypeL].weapons[weaponL].weaponGimbalMountAsset, visualAgent.weaponMountL) as GameObject;
+//            visualAgent.animWeaponL = go.GetComponent<Animator>();
+//            go.transform.localPosition = Vector3.zero;
+//            go.transform.localRotation = Quaternion.Euler(Vector3.zero);
+//            go.transform.localScale = Vector3.zero;
+//        }
+//
+//        if (visualAgent.mechID.data.hasWeaponR)
+//        {
+//            go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[weaponTypeR].weapons[weaponR].weaponGimbalMountAsset, visualAgent.weaponMountR) as GameObject;
+//            visualAgent.animWeaponL = go.GetComponent<Animator>();
+//            go.transform.localPosition = Vector3.zero;
+//            go.transform.localRotation = Quaternion.Euler(Vector3.zero);
+//            go.transform.localScale = Vector3.zero;
+//        }
+//
+//        if (visualAgent.mechID.data.hasWeaponGimbalL)
+//        {
+//            go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[weaponGimbalTypeL].weapons[weaponGimbalL].weaponGimbalMountAsset, visualAgent.weaponMountGimbalL) as GameObject;
+//            visualAgent.animWeaponL = go.GetComponent<Animator>();
+//            go.transform.localPosition = Vector3.zero;
+//            go.transform.localRotation = Quaternion.Euler(Vector3.zero);
+//            go.transform.localScale = Vector3.zero;
+//        }
+//
+//        if (visualAgent.mechID.data.hasWeaponGimbalR)
+//        {
+//            go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[weaponGimbalTypeR].weapons[weaponGimbalR].weaponGimbalMountAsset, visualAgent.weaponMountGimbalR) as GameObject;
+//            visualAgent.animWeaponL = go.GetComponent<Animator>();
+//            go.transform.localPosition = Vector3.zero;
+//            go.transform.localRotation = Quaternion.Euler(Vector3.zero);
+//            go.transform.localScale = Vector3.zero;
+//        }
+//
+//
+//
+//        return lowerTorso;
+//    }
+
+    public static GameObject SpawnMech(Vector3 pos, Quaternion rot, MechData mechData, bool animationEnabled)
     {
         Transform upperTorsoParent;
-        Animator lowerTorsoAnim;
-        GameObject lowerTorso = LTRigAssembler.Instance.AssembleLowerTorso(lowerTorsoID, legsID, pos, rot, out upperTorsoParent, out lowerTorsoAnim);
+        Animator lowerTorsoAnimator;
+        GameObject lowerTorso = LTRigAssembler.Instance.AssembleLowerTorso(
+            PartsDataBase.Instance.mechPartType[(int)PartType.LowerTorso].part[mechData.lowerTorsoID].assetID, 
+            PartsDataBase.Instance.mechPartType[(int)PartType.Legs].part[mechData.legsID].assetID, 
+            pos, rot, out upperTorsoParent, out lowerTorsoAnimator);
 
         MechVisualAgent visualAgent = lowerTorso.AddComponent<MechVisualAgent>();
+        PlayerData mechInfo = lowerTorso.AddComponent<PlayerData>();
+        MechIDConst mechIDConst = lowerTorso.AddComponent<MechIDConst>();
+        NavMeshAgent navMeshAgent = lowerTorso.AddComponent<NavMeshAgent>();
 
-        visualAgent.mechID = lowerTorso.AddComponent<MechIDConst>();
+        mechIDConst.data = mechData;
+        visualAgent.mechID = mechIDConst;
         visualAgent.upperTorsoParent = upperTorsoParent;
+        visualAgent.animLowerTorso = lowerTorsoAnimator;
+        int armAssetID = PartsDataBase.Instance.mechPartType[(int)PartType.Arms].part[mechData.armsID].assetID;
 
-        UTRigAssembler.Instance.AssembleUpperTorso(upperTorsoID, armsID, headID, visualAgent.upperTorsoParent, 
-            out visualAgent.weaponMountL, out visualAgent.weaponMountR, out visualAgent.shieldMountL, out visualAgent.shieldMountR,
-            out visualAgent.weaponMountGimbalL, out visualAgent.weaponMountGimbalR);
+        UTRigAssembler.Instance.AssembleUpperTorso(
+            PartsDataBase.Instance.mechPartType[(int)PartType.UpperTorso].part[mechData.upperTorsoID].assetID,
+            armAssetID,
+            PartsDataBase.Instance.mechPartType[(int)PartType.Head].part[mechData.headID].assetID,
+            visualAgent.upperTorsoParent, out visualAgent.weaponMountL,
+            out visualAgent.weaponMountR, out visualAgent.shieldMountL, out visualAgent.shieldMountR, out visualAgent.weaponMountGimbalL, out visualAgent.weaponMountGimbalR, out visualAgent.animUpperTorso);
 
         GameObject go;
-        if (visualAgent.mechID.hasWeaponL)
+
+
+
+        if (visualAgent.mechID.data.hasWeaponL)
         {
-            go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[weaponTypeL].weapons[weaponL].weaponGimbalMountAsset, visualAgent.weaponMountL) as GameObject;
+            mechInfo.leftArmWeapon = WeaponDataBase.Instance.weaponTypeArray[mechData.weaponArmLType].weapons[mechData.weaponArmLID];
+            mechInfo.hasLeftArmWeapon = true;
+            go = GameObject.Instantiate(mechInfo.leftArmWeapon.weaponAsset, visualAgent.weaponMountL) as GameObject;
             visualAgent.animWeaponL = go.GetComponent<Animator>();
             go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = Quaternion.Euler(Vector3.zero);
-            go.transform.localScale = Vector3.zero;
+            go.transform.localScale = Vector3.one;
+
+            if (UTRigAssembler.GetArmType(armAssetID) == UTRigAssembler.ArmType.SingleJoint)
+            {
+                go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[mechData.weaponArmLType].weapons[mechData.weaponArmLID].weaponGimbalMountAsset, go.transform) as GameObject;
+            }
+            else
+            {
+                go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[mechData.weaponArmLType].weapons[mechData.weaponArmLID].weaponStaticMountAsset, go.transform) as GameObject;
+            }
+
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            go.transform.localScale = Vector3.one;
+
         }
 
-        if (visualAgent.mechID.hasWeaponR)
+        if (visualAgent.mechID.data.hasWeaponR)
         {
-            go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[weaponTypeR].weapons[weaponR].weaponGimbalMountAsset, visualAgent.weaponMountR) as GameObject;
+            mechInfo.rightArmWeapon = WeaponDataBase.Instance.weaponTypeArray[mechData.weaponArmRType].weapons[mechData.weaponArmRID];
+            mechInfo.hasRightArmWeapon = true;
+            go = GameObject.Instantiate(mechInfo.rightArmWeapon.weaponAsset, visualAgent.weaponMountR) as GameObject;
             visualAgent.animWeaponL = go.GetComponent<Animator>();
             go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = Quaternion.Euler(Vector3.zero);
-            go.transform.localScale = Vector3.zero;
+            go.transform.localScale = Vector3.one;
+
+            if (UTRigAssembler.GetArmType(armAssetID) == UTRigAssembler.ArmType.SingleJoint)
+            {
+                go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[mechData.weaponArmRType].weapons[mechData.weaponArmRID].weaponGimbalMountAsset, go.transform) as GameObject;
+            }
+            else
+            {
+                go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[mechData.weaponArmRType].weapons[mechData.weaponArmRID].weaponStaticMountAsset, go.transform) as GameObject;
+            }
+
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            go.transform.localScale = Vector3.one;
         }
 
-        if (visualAgent.mechID.hasWeaponGimbalL)
+        if (visualAgent.mechID.data.hasWeaponGimbalL)
         {
-            go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[weaponGimbalTypeL].weapons[weaponGimbalL].weaponGimbalMountAsset, visualAgent.weaponMountGimbalL) as GameObject;
+            mechInfo.backWeapon = WeaponDataBase.Instance.weaponTypeArray[mechData.weaponGimbalLType].weapons[mechData.weaponGimbalLID];
+            mechInfo.hasBackWeapon = true;
+            go = GameObject.Instantiate(mechInfo.backWeapon.weaponAsset, visualAgent.weaponMountGimbalL) as GameObject;
             visualAgent.animWeaponL = go.GetComponent<Animator>();
             go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = Quaternion.Euler(Vector3.zero);
-            go.transform.localScale = Vector3.zero;
+            go.transform.localScale = Vector3.one;
+
+            go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[mechData.weaponGimbalLType].weapons[mechData.weaponGimbalLID].weaponGimbalMountAsset, go.transform) as GameObject;
+
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            go.transform.localScale = Vector3.one;
         }
 
-        if (visualAgent.mechID.hasWeaponGimbalR)
+        if (visualAgent.mechID.data.hasWeaponGimbalR)
         {
-            go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[weaponGimbalTypeR].weapons[weaponGimbalR].weaponGimbalMountAsset, visualAgent.weaponMountGimbalR) as GameObject;
+            go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[mechData.weaponGimbalRType].weapons[mechData.weaponGimbalRID].weaponAsset, visualAgent.weaponMountGimbalR) as GameObject;
             visualAgent.animWeaponL = go.GetComponent<Animator>();
             go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = Quaternion.Euler(Vector3.zero);
-            go.transform.localScale = Vector3.zero;
+            go.transform.localScale = Vector3.one;
+
+            go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[mechData.weaponGimbalRType].weapons[mechData.weaponGimbalRID].weaponGimbalMountAsset, go.transform) as GameObject;
+
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            go.transform.localScale = Vector3.one;
         }
 
+        visualAgent.SetAnimation(animationEnabled);
+
+        visualAgent.UpdateRendererReferences();
+
+
+        visualAgent.ChangeColor(0, mechData.Color1);
+        visualAgent.ChangeColor(1, mechData.Color2);
+        visualAgent.ChangeColor(2, mechData.Color3);
+
+        mechInfo.maxHealth = PartsDataBase.CalculateTotalArmor(mechData.headID, mechData.upperTorsoID, mechData.lowerTorsoID, mechData.legsID, mechData.armsID);
+        mechInfo.curHealth = mechInfo.maxHealth;
+
+        mechInfo.maxAP = PartsDataBase.CalculateTotalAP(mechData.headID, mechData.upperTorsoID, mechData.lowerTorsoID, mechData.legsID, mechData.armsID);
+        mechInfo.curAP = mechInfo.maxAP;
+
+        PassiveBonus pb = PartsDataBase.CalculateTotalBonus(mechData.headID, mechData.upperTorsoID, mechData.lowerTorsoID, mechData.legsID, mechData.armsID);
+
+        mechInfo.maxMoveDist = PartsDataBase.CalculateTotalMovement(PartsDataBase.CalculateTotalWeight(mechData), pb.bonusMovement);
+
+
+
+        lowerTorso.tag = "Player";
+        lowerTorso.layer = 9;
         return lowerTorso;
+
     }
 }

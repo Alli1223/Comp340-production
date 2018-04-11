@@ -9,7 +9,7 @@ public class ManagersManager : MonoBehaviour
 	[HideInInspector]
 	public TurnManager tTurn;
 	[HideInInspector]
-	public GridPositionDetection tDetect;
+    public GridExtentions tDetect;
 	[HideInInspector]
 	public GridGeneration tGrid;
 	[HideInInspector]

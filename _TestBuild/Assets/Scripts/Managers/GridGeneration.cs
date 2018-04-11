@@ -3,27 +3,34 @@
 	Created By: 	Marc Andrews
 	Last Edit: 		27/09/2017 10:32
 	Last Edit By: 	Marc Andrews
+    
 */
 using UnityEngine;
+using UnityEditor;
 using System.IO;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
+[ExecuteInEditMode]
 public class GridGeneration : MonoBehaviour 
 {
     public static GridGeneration gridSingle;
 	//Makes Grid gen script a singleton
-    void Awake()
+
+    void OnEnable()
     {
         if (gridSingle == null)
             gridSingle = this;
         else
             Destroy(this); 
 
-		ManagersManager.manager.tGrid = gridSingle;
-        LoadVars();
+        if (SceneManager.GetActiveScene() != null)
+        {
+            ManagersManager.manager.tGrid = gridSingle;
+        }
     }
 
 
@@ -31,8 +38,8 @@ public class GridGeneration : MonoBehaviour
 
     [Range (1,10)]
     public int tileSize = 1;
-	[Range(0.1f,1)]
-	public float tileHeight = 1;
+//	[Range(0.1f,1)]
+//	public float tileHeight = 1;
     [SerializeField]
     public WalkableTileArray tileVariables = new WalkableTileArray(0);
     public List<GameObject> currentTiles;
@@ -42,6 +49,7 @@ public class GridGeneration : MonoBehaviour
 
     private float halfSize;
     private GameObject tileHolder;
+    private GameObject deletePar;
 
     private int currentGridNoRef;
 
@@ -94,6 +102,7 @@ public class GridGeneration : MonoBehaviour
             tileHolder.transform.parent = x.transform;
             currentTiles.Add (tileHolder);
             TileGen(x.transform, tileVariables[currentGridNoRef]);
+			x.name = "Floor_Grid ID: " + (1000 + currentGridNoRef);
             currentGridNoRef++;
         } 
         if (tileShown)
@@ -104,6 +113,8 @@ public class GridGeneration : MonoBehaviour
         tileHold.walkTwo = tileVariables;
 //        tileHold.SetTile(0, 0, 0, thisShouldShow);
     }
+
+	string idY = "Y", idX = "X", idE = ":"; 
 
     /// <summary>
     /// Generates a grid of tiles on start obj.
@@ -122,9 +133,14 @@ public class GridGeneration : MonoBehaviour
         {
 			for (int x = 0; x < startObj.localScale.x; x += tileSize)
             {
-                GameObject nwTilePiece = GameObject.CreatePrimitive(PrimitiveType.Cube);
-				nwTilePiece.transform.position = objBotLeft + new Vector3(x, 0, y);
-				nwTilePiece.transform.localScale = new Vector3 (tileSize, tileHeight, tileSize);
+                GameObject nwTilePiece = GameObject.CreatePrimitive(PrimitiveType.Quad);
+				nwTilePiece.transform.position = objBotLeft + new Vector3(x, 0.001f, y);
+                nwTilePiece.transform.localScale = new Vector3 (tileSize, tileSize, tileSize);
+                nwTilePiece.transform.Rotate(90, 0, 0);
+				idY = Ypos <= 9 ? idY = "Y00" : Ypos <= 99 ? idY = "Y0" : "Y";
+				idX = Xpos <= 9 ? idX = "X00" : Xpos <= 99 ? idX = "X0" : "X";
+				idE = (Xpos * objScaleX + Ypos) <= 9 ? idE = ":000" : (Xpos * objScaleX + Ypos) <= 99 ? idE = ":00" : (Xpos * objScaleX + Ypos) <= 999 ? idE = ":0" : ":";
+				nwTilePiece.name = "G" + currentGridNoRef + idY + Ypos + idX + Xpos + idE + (Xpos * objScaleX + Ypos);
                 nwTilePiece.tag = "gridPiece";              
 				nwTilePiece.transform.parent = tileHolder.transform;
 				nwTilePiece.GetComponent<MeshRenderer> ().material = tile_Tex;
@@ -134,15 +150,16 @@ public class GridGeneration : MonoBehaviour
 				nwTile.SetPosition (objBotLeft + new Vector3 (x, 0, y));
                 nwTile.CurrentGridCoods(currentGridNoRef, Ypos, Xpos);
                 nwTile.thisTile = nwTilePiece;
+                nwTile.tileID = nwTilePiece.name;
                 nwTile.isCover = false;
-                Collider[] objectsInRange = Physics.OverlapSphere (nwTile.tPos, halfSize);
+                Collider[] objectsInRange = Physics.OverlapSphere (nwTile.tPos, halfSize - 0.01f);
 				for (int i = 0; i < objectsInRange.Length; i++) 
 				{
-                    if (!walkableObjs.Contains(objectsInRange[i].gameObject) && objectsInRange[i].tag != "gridPiece" && objectsInRange[i].gameObject.layer == 11)
+                    if (!walkableObjs.Contains(objectsInRange[i].gameObject) && objectsInRange[i].tag != "gridPiece" && objectsInRange[i].gameObject.layer == 12)
                     {
                         nwTile.NotWalkable();
                         nwTile.isCover = true;
-                        nwTilePiece.SetActive(false);
+                        nwTile.tileCover = coverDirection.Building;
                     }
 				}
                 thisObjGrid[Ypos,Xpos] = nwTile;
@@ -153,7 +170,10 @@ public class GridGeneration : MonoBehaviour
                 }
                 else
                 {
-                    nwTile.tileCover = coverDirection.NONE;
+                    if (nwTile.tileCover != coverDirection.Building)
+                    {
+                        nwTile.tileCover = coverDirection.NONE;
+                    }
                 }
                 currentTiles.Add(nwTilePiece);
 				tileMeshs.Add (nwTilePiece.GetComponent<MeshRenderer> ());
@@ -164,67 +184,113 @@ public class GridGeneration : MonoBehaviour
         }  
         foreach (Tile t in coverTiles)
         {            
-            if ((t.Ypos + 1) < tileVariables[currentGridNoRef].Width)
-            {
-                Tile nwerTile = tileVariables[t.currentGrid][t.Ypos + 1, t.Xpos];
-                nwerTile.tileCover = !nwerTile.isCover ? coverDirection.North : coverDirection.NONE;
-                if (!nwerTile.isCover)
+                if ((t.Ypos + 1) < tileVariables[currentGridNoRef].Width)
                 {
-                    coverDirTiles.Add(nwerTile);
+                    Tile nwerTile = tileVariables[t.currentGrid][t.Ypos + 1, t.Xpos];
+                nwerTile.tileCover = !nwerTile.isCover? coverDirection.North : nwerTile.tileCover != coverDirection.Building? coverDirection.NONE : nwerTile.tileCover;
+                    if (!nwerTile.isCover)
+                    {
+                        coverDirTiles.Add(nwerTile);
+                    }
                 }
-            }
-            if ((t.Ypos - 1) >= 0)
-            {
-                Tile nwerTile = tileVariables[t.currentGrid][t.Ypos - 1, t.Xpos];
-                nwerTile.tileCover = !nwerTile.isCover? coverDirection.South : coverDirection.NONE;
-                if (!nwerTile.isCover)
+                if ((t.Ypos - 1) >= 0)
                 {
-                    coverDirTiles.Add(nwerTile);
-                }
-            }
-
-            if ((t.Xpos + 1) < tileVariables[currentGridNoRef].Height)
-            {
-                Tile nwerTile = tileVariables[t.currentGrid][t.Ypos, t.Xpos + 1];
-                nwerTile.tileCover = !nwerTile.isCover? coverDirection.West : coverDirection.NONE;
-                if (!nwerTile.isCover)
+                    Tile nwerTile = tileVariables[t.currentGrid][t.Ypos - 1, t.Xpos];
+                nwerTile.tileCover = !nwerTile.isCover ? coverDirection.South : nwerTile.tileCover != coverDirection.Building? coverDirection.NONE : nwerTile.tileCover;
+                    if (!nwerTile.isCover)
+                    {
+                        coverDirTiles.Add(nwerTile);
+                    }
+                } 
+                if ((t.Xpos + 1) < tileVariables[currentGridNoRef].Height)
                 {
-                    coverDirTiles.Add(nwerTile);
-                }
-            }
-
-            if ((t.Xpos - 1) >= 0)
-            {
-                Tile nwerTile = tileVariables[t.currentGrid][t.Ypos, t.Xpos - 1];
-                nwerTile.tileCover = !nwerTile.isCover? coverDirection.East : coverDirection.NONE;
-                if (!nwerTile.isCover)
+                    Tile nwerTile = tileVariables[t.currentGrid][t.Ypos, t.Xpos + 1];
+                    if (nwerTile != null)
+                    {
+                    nwerTile.tileCover = !nwerTile.isCover ? coverDirection.West : nwerTile.tileCover != coverDirection.Building? coverDirection.NONE : nwerTile.tileCover;
+                        if (!nwerTile.isCover)
+                        {
+                            coverDirTiles.Add(nwerTile);
+                        }
+                    }
+                } 
+                if ((t.Xpos - 1) >= 0)
                 {
-                    coverDirTiles.Add(nwerTile);
-                }
-            }
-            t.tileCover = coverDirection.NONE;
+                    Tile nwerTile = tileVariables[t.currentGrid][t.Ypos, t.Xpos - 1];
+                nwerTile.tileCover = !nwerTile.isCover ? coverDirection.East : nwerTile.tileCover != coverDirection.Building? coverDirection.NONE : nwerTile.tileCover;
+                    if (!nwerTile.isCover)
+                    {
+                        coverDirTiles.Add(nwerTile);
+                    }
+                } 
+            t.tileCover = coverDirection.Building;
         }
 //        SaveVars();
     }
 
-    void SaveVars()
+    public void LoadData(TileVarsHolder data)
     {
-//        BinaryFormatter bf = new BinaryFormatter();
-//        FileStream file = File.Create(Application.persistentDataPath + "/savedVars.baconAndGravy");
-//        bf.Serialize(file, tileVariables);
-//        file.Close();
+        WalkableTileArray savedTiles = data.walkTwo;
+        for (int z = 0; z < savedTiles.Width; z++)
+        {
+            for (int y = 0; y < savedTiles[z].Height; y++)
+            {
+
+                for (int x = 0; x < savedTiles[z].Width; x++)
+                {
+                    if (savedTiles[z][x, y].thisTile == null)
+                    {
+                        Tile copyOfTile = savedTiles[z][x, y];
+                        GameObject gO = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        ReParentTiles(gO, copyOfTile);
+                        gO.transform.position = copyOfTile.tPos;
+                        gO.transform.localScale = new Vector3(tileSize, tileSize, tileSize);
+
+                        gO.name = copyOfTile.tileID;
+                        gO.GetComponent<MeshRenderer>().material = tile_Tex;
+                        copyOfTile.thisTile = gO;
+                    }
+                    else
+                    {
+                        Tile copyOfTile = savedTiles[z][x, y];
+                        GameObject gO = copyOfTile.thisTile;
+                        gO.transform.position = copyOfTile.tPos;
+                        gO.transform.localScale = new Vector3(tileSize, tileSize, tileSize);
+                    }
+                }
+
+            }
+
+        }
+        ShowTiles();
+        ShowTiles();
     }
 
-    void LoadVars()
+    void ReParentTiles(GameObject tileObj, Tile t)
     {
-        if (File.Exists(Application.persistentDataPath + "/savedVars.baconAndGravy"))
-        {
-//            BinaryFormatter bf = new BinaryFormatter();
-//            FileStream file = File.Open(Application.persistentDataPath + "/savedVars.baconAndGravy", FileMode.Open);
-//            tileVariables = (Tile[,,])bf.Deserialize(file);
-//            file.Close();
+        List<GameObject> build = new List<GameObject>();
+        build.AddRange(FindObjectsOfType(typeof(GameObject))as GameObject[]);
+        build.RemoveAll(item => !item.name.Contains("GridNoRef"));
+        GameObject par = null;
+        foreach (GameObject x in build)
+        {        
+            if (x.name.Contains("" + t.currentGrid))
+            {                            
+                par = x;
+            }
         }
+        if (par == null)
+        {
+            par = new GameObject();
+            par.transform.position = Vector3.zero;
+            par.transform.parent = GameObject.Find("Floor_Grid ID: " + (1000 + t.currentGrid)).transform;
+            par.name = "Tile Holder: " + par.transform.parent.name + " GridNoRef: " + t.currentGrid;
+            currentTiles.Add(par);
+        }
+        tileObj.transform.parent = par.transform;
     }
+
+   
 
 
 	/// <summary>
@@ -257,7 +323,8 @@ public class GridGeneration : MonoBehaviour
         {
 			DestroyImmediate(c);
         }
-		currentTiles.Clear ();
+        currentTiles.Clear ();
+        DestroyImmediate(deletePar);
     }
 
 	private void DimensionScale(List<GameObject> walkableObjects)
@@ -288,15 +355,15 @@ public class GridGeneration : MonoBehaviour
 	public void ShowTiles() 
 	{ 
 		tileShown = !tileShown; 
-		foreach (MeshRenderer x in tileMeshs) 
+        foreach (MeshRenderer x in tileMeshs) 
 		{ 
 			if (tileShown) 
 			{ 
-			x.enabled = true; 
+                x.gameObject.SetActive(true);
 			} 
 			else 
 			{ 
-				x.enabled = false; 
+                x.gameObject.SetActive(false);
 			} 
 		}
 
@@ -335,6 +402,68 @@ public class GridGeneration : MonoBehaviour
             }
         }
 	}
+
+    public void AllignBuildings()
+    {
+        List<GameObject> build = new List<GameObject>();
+        build.AddRange(FindObjectsOfType(typeof(GameObject))as GameObject[]);
+        build.RemoveAll(item => item.layer != 11);
+        Debug.Log("Realigning  " + build.Count + " items");
+        int elementNo = 0;
+        foreach (GameObject x in build)
+        {            
+            if (x.GetComponent<BoxCollider>() != null)
+            {
+                DestroyImmediate(x.GetComponent<BoxCollider>());
+            }  
+            List<Transform> children = new List<Transform>();
+            children.AddRange(x.GetComponentsInChildren<Transform>());
+            bool hasChild = false;
+            BoxCollider xCollide;
+            foreach (Transform c in children)
+            {
+                if (c.CompareTag("buildCollide"))
+                {
+                    hasChild = true;
+                }
+            }
+            if (!hasChild)
+            {
+                GameObject bCollide = new GameObject();
+                x.transform.position = GridExtentions.GetClosestGrid(x.transform.position, tileVariables).tPos;
+                bCollide.transform.position = x.transform.position;
+                xCollide = bCollide.AddComponent<BoxCollider>();
+                bCollide.transform.SetParent(x.transform);
+                bCollide.layer = 12;
+                bCollide.name = x.transform.name + " :" + elementNo + "C";
+                bCollide.tag = "buildCollide";
+                elementNo++;
+            }
+            if (x.GetComponent<MeshRenderer>() != null)
+            {
+                MeshRenderer bMesh = x.GetComponent<MeshRenderer>();
+                float buildY = bMesh.bounds.extents.y;
+                Vector3 top = new Vector3(0,buildY,0);
+                Vector3 bot = new Vector3(0,-buildY,0);
+                float dist = Vector3.Distance(top, bot);
+                xCollide = x.GetComponentInChildren<BoxCollider>();
+                xCollide.center = new Vector3(0,bMesh.bounds.extents.y,0);
+                xCollide.size = new Vector3((halfSize * 2), dist, (halfSize * 2));
+            }
+        }
+        build.Clear();
+
+    }
+
+    public void RemoveBuildingBoxColliders()
+    {
+        List<GameObject> children = new List<GameObject>();
+        children.AddRange(GameObject.FindGameObjectsWithTag("buildCollide"));
+        for (int i = 0; i < children.Count; i++)
+        {
+            DestroyImmediate(children[i].gameObject);
+        }
+    }
 
 	public void RevertTileColour()
 	{

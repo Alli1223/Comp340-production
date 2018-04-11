@@ -38,4 +38,9 @@ public struct LowerBoundTile
 
         tiles = new Tile[width * height];
     }
+
+    public Tile[] All()
+    {
+        return tiles;
+    }
 }

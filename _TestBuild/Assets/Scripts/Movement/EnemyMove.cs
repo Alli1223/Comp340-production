@@ -23,7 +23,7 @@ public class EnemyMove : MonoBehaviour
 
 		tManage = ManagersManager.manager;
 
-        enemyTile = tManage.tDetect.GetClosestGrid (EnemyManager.currentEnemy.transform.position, tManage.tGrid.currentTiles);
+        enemyTile = GridExtentions.GetClosestGrid (EnemyManager.currentEnemy.transform.position, tManage.tGrid.currentTiles);
 		tManage.tDetect.FindTilesInDist (enemyTile, tManage.tGrid.tileMeshs, (float)EnemyManager.currentEnemy.GetComponent<TempEnemyVar> ().moveDist);
 		tilesClosest.AddRange(tManage.tDetect.FindTilesInDist (enemyTile, tManage.tGrid.tileMeshs, EnemyManager.currentEnemy.GetComponent<TempEnemyVar>().moveDist));
 	}
@@ -34,8 +34,8 @@ public class EnemyMove : MonoBehaviour
 		Transform moveToPoint = tManage.tDetect.RealtivePosition (tilesClosest, tManage.tDetect.RealtivePosition (tManage.tPlayer.currentPlayers, enemyTile));
 		TempEnemyVar curEnem = EnemyManager.currentEnemy.GetComponent<TempEnemyVar>();
 		EnemyManager.currentEnemy.GetComponent<NavMeshAgent> ().SetDestination (moveToPoint.position);
-        curEnem.currentAP -= tManage.tDetect.DistCheck(enemyTile.position, moveToPoint.position);
-        curEnem.moveDist -= tManage.tDetect.DistCheck(enemyTile.position, moveToPoint.position);
+        curEnem.currentAP -= GridExtentions.DistCheck(enemyTile.position, moveToPoint.position);
+        curEnem.moveDist -= GridExtentions.DistCheck(enemyTile.position, moveToPoint.position);
 	}
     
     public void Shoot()
@@ -54,7 +54,7 @@ public class EnemyMove : MonoBehaviour
 
     public int GetClosestPlayerDist(Transform enemy)
     {
-        return tManage.tDetect.DistCheck(enemy.position, PlayerManager.currentPlayer.transform.position);
+        return GridExtentions.DistCheck(enemy.position, PlayerManager.currentMech.transform.position);
     }
 
 	private IEnumerator HitFeedback(Transform player)
@@ -124,7 +124,7 @@ public class EnemyMove : MonoBehaviour
     private void ResetTiles()
     {
         tilesClosest.Clear();
-		enemyTile = tManage.tDetect.GetClosestGrid (EnemyManager.currentEnemy.transform.position, tManage.tGrid.currentTiles);
+        enemyTile = GridExtentions.GetClosestGrid (EnemyManager.currentEnemy.transform.position, tManage.tGrid.currentTiles);
 		float range = EnemyManager.currentEnemy.GetComponent<TempEnemyVar>().currentAP < EnemyManager.currentEnemy.GetComponent<TempEnemyVar>().moveDist ? (float)EnemyManager.currentEnemy.GetComponent<TempEnemyVar>().currentAP : (float)EnemyManager.currentEnemy.GetComponent<TempEnemyVar>().moveDist;
         tManage.tDetect.FindTilesInDist (enemyTile, tManage.tGrid.tileMeshs, range);
         tilesClosest.AddRange(tManage.tDetect.FindTilesInDist (enemyTile, tManage.tGrid.tileMeshs, (int)range));

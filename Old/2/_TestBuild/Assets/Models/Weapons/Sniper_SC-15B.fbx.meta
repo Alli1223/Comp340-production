@@ -1,0 +1,109 @@
+fileFormatVersion: 2
+guid: c7d94dcaa44c3694fbed6d7e16fddd51
+timeCreated: 1523440567
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Sniper_SC-15B_Barrel
+    100004: Sniper_SC-15B_Gimbal_Mount
+    100006: Sniper_SC-15B_Magazine
+    100008: Sniper_SC-15B_Magazine_loader
+    100010: Sniper_SC-15B_MainFrame
+    100012: Sniper_SC-15B_Static_Mount
+    400000: //RootNode
+    400002: Sniper_SC-15B_Barrel
+    400004: Sniper_SC-15B_Gimbal_Mount
+    400006: Sniper_SC-15B_Magazine
+    400008: Sniper_SC-15B_Magazine_loader
+    400010: Sniper_SC-15B_MainFrame
+    400012: Sniper_SC-15B_Static_Mount
+    2300000: Sniper_SC-15B_Barrel
+    2300002: Sniper_SC-15B_Gimbal_Mount
+    2300004: Sniper_SC-15B_Magazine
+    2300006: Sniper_SC-15B_Magazine_loader
+    2300008: Sniper_SC-15B_MainFrame
+    2300010: Sniper_SC-15B_Static_Mount
+    3300000: Sniper_SC-15B_Barrel
+    3300002: Sniper_SC-15B_Gimbal_Mount
+    3300004: Sniper_SC-15B_Magazine
+    3300006: Sniper_SC-15B_Magazine_loader
+    3300008: Sniper_SC-15B_MainFrame
+    3300010: Sniper_SC-15B_Static_Mount
+    4300000: Sniper_SC-15B_Static_Mount
+    4300002: Sniper_SC-15B_Gimbal_Mount
+    4300004: Sniper_SC-15B_MainFrame
+    4300006: Sniper_SC-15B_Magazine
+    4300008: Sniper_SC-15B_Magazine_loader
+    4300010: Sniper_SC-15B_Barrel
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

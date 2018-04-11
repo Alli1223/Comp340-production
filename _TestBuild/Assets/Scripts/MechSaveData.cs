@@ -8,72 +8,41 @@ using System.IO;
 public static class MechSaveData
 {
     const string playerMechDataPath = "Assets/Resources/Data";
+    /// <summary>
+    /// Gives you a location of player mechs. This string must be used inside string.Format to function correctly, arg0 should be playerID, arg1 should be the mech name. This also needs to be added to Application.persistentDataPath
+    /// </summary>
+    public const string playerMechPath = "/Profiles/{0}/Mechs/{1}.mech";
 
-    public static void SaveMech(MechIDConst mech)
+
+    public static void SaveMech(MechData data, string playerName, string name)
     {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file;
-        file = File.Open(Application.persistentDataPath + "/" + mech.displayName + ".mech", FileMode.Create);
 
-
-        MechData data = new MechData();
-        data.name = mech.displayName;
-        data.headID = mech.assetIDHead;
-        data.armsID = mech.assetIDArms;
-        data.legsID = mech.assetIDLegs;
-        data.upperTorsoID = mech.assetIDUpperTorso;
-        data.lowerTorsoID = mech.assetIDLowerTorso;
-
-        data.hasWeaponL = mech.hasWeaponL;
-        data.hasWeaponR = mech.hasWeaponR;
-        data.hasWeaponGimbalL = mech.hasWeaponGimbalL;
-        data.hasWeaponGimbalR = mech.hasWeaponGimbalR;
-
-        data.weaponArmLType = mech.weaponArmLType;
-        data.weaponArmLID = mech.weaponArmLID;
-        data.weaponArmRType = mech.weaponArmRType;
-        data.weaponArmRID = mech.weaponArmRID;
-        data.weaponGimbalLType = mech.weaponGimbalLType;
-        data.weaponGimbalLID = mech.weaponGimbalLID;
-        data.weaponGimbalRType = mech.weaponGimbalRType;
-        data.weaponGimbalRID = mech.weaponGimbalRID;
-
-
+        file = File.Open(Application.persistentDataPath + string.Format(playerMechPath, playerName, name), FileMode.OpenOrCreate);
 
         bf.Serialize(file, data);
         file.Close();
     }
 
-    public static void LoadMech(ref MechIDConst mech, string name)
+    public static MechData LoadMech(string playerName, string name)
     {
-        if (File.Exists(Application.persistentDataPath + "/" + name + ".mech"))
+        string path = Application.persistentDataPath + string.Format(playerMechPath, playerName, name);
+        if (File.Exists(path))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/" + name + ".mech", FileMode.Open);
-            MechData data = bf.Deserialize(file) as MechData;
+            FileStream file = File.Open(path, FileMode.Open);
+
+            MechData ret = bf.Deserialize(file) as MechData;
+
             file.Close();
 
-            mech.assetIDArms = data.armsID;
-            mech.assetIDHead = data.headID;
-            mech.assetIDLegs = data.legsID;
-            mech.assetIDLowerTorso = data.lowerTorsoID;
-            mech.assetIDUpperTorso = data.upperTorsoID;
-
-            mech.hasWeaponL = data.hasWeaponL;
-            mech.hasWeaponR = data.hasWeaponR;
-            mech.hasWeaponGimbalL = data.hasWeaponGimbalL;
-            mech.hasWeaponGimbalR = data.hasWeaponGimbalR;
-
-            mech.weaponArmLType = data.weaponArmLType;
-            mech.weaponArmLID = data.weaponArmLID;
-            mech.weaponArmRType = data.weaponArmRType;
-            mech.weaponArmRID = data.weaponArmRID;
-            mech.weaponGimbalLType = data.weaponGimbalLType;
-            mech.weaponGimbalLID = data.weaponGimbalLID;
-            mech.weaponGimbalRType = data.weaponGimbalRType;
-            mech.weaponGimbalRID = data.weaponGimbalRID;
-
-            mech.displayName = data.name;
+            return ret;
+        }
+        else
+        {
+            Debug.LogError(path + " - Does not exists");
+            return new MechData();
         }
     }
 
@@ -82,7 +51,7 @@ public static class MechSaveData
 
 
 [Serializable]
-class MechData
+public class MechData
 {
     [SerializeField]
     public string name;
@@ -122,4 +91,11 @@ class MechData
     public bool hasWeaponGimbalL;
     [SerializeField]
     public bool hasWeaponGimbalR;
+
+    [SerializeField]
+    public int Color1;
+    [SerializeField]
+    public int Color2;
+    [SerializeField]
+    public int Color3;
 }

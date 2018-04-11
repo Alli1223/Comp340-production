@@ -1,0 +1,4 @@
+sceneSetups:
+- path: D:/Program Files (x86)/GoogleDrive/Uni Work/TestBuilds/2/_TestBuild/Assets/MechAssembly_tests.unity
+  isLoaded: 1
+  isActive: 1

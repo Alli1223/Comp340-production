@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class temp_mechAssemblyUI : MonoBehaviour 
 {
+    /*
     public GameObject headPanel;
 
     public Text textFieldHead;
@@ -12,6 +14,10 @@ public class temp_mechAssemblyUI : MonoBehaviour
     public Text textFieldLowerTorso;
     public Text textFieldArms;
     public Text textFieldLegs;
+    public Text textFieldColorName;
+    public Image imageColorPreview;
+    public RectTransform rectTrColorViewport;
+    public Transform pedestal;
 
     // TEMP this should be removed and the script should be able to run using MechIDConst class fully
     int currentHeadID;
@@ -29,28 +35,81 @@ public class temp_mechAssemblyUI : MonoBehaviour
     Animator animLT;
 
     MechIDConst currentMechConst;
+    MechVisualAgent mechVisualAgent;
 
     GameObject weaponArmL;
     GameObject weaponArmR;
     GameObject weaponGimbalL;
+
+    public GameObject colorSquarePrefab;
+
+    GameObject[] colorSquares;
 
     string[] weaponTypeNames = new string[8] {"Auto Cannon", "Chaingun", "Mortar", "Missile Silo", "Rocket Silo", "Scatter Cannnon", "Sniper Cannon", "Snub Cannon"};
     public Text armWpnTypeTextR;
     public Text armWpnTypeTextL;
     public Text gimbalWpnTypeTextL;
 
+    int currentColorMask = 0;
 
     bool animationsEnabled = true;
+    int[] mechColors = new int[3];
+
+    void FillInColorSquares(int colorMask)
+    {
+        colorSquares = new GameObject[MechColorArray.GetArrayLength()];
+        for (int i = 0; i < colorSquares.Length; i++)
+        {
+            colorSquares[i] = GameObject.Instantiate(colorSquarePrefab, rectTrColorViewport);
+            Button bt = colorSquares[i].GetComponent<Button>();
+            bt.image.color = MechColorArray.GetColor(i);
+
+            int indexCopy = i;
+            UnityEngine.Events.UnityAction colorPick = () =>
+                {
+                    this.SetColor(indexCopy);
+                };
+            bt.onClick.AddListener(colorPick);
+        }
+    }
+
+    void UpdateColorUI()
+    {
+        textFieldColorName.text = MechColorArray.GetColorName(mechColors[currentColorMask]);
+        imageColorPreview.color = MechColorArray.GetColor(mechColors[currentColorMask]);
+    }
+
+    void UpdateColors()
+    {
+        UpdateColorUI();
+        for (int i = 0; i < 3; i++)
+        {
+            mechVisualAgent.ChangeColor(i, MechColorArray.GetColor(mechColors[i]));
+        }
+    }
+
+    public void SelectColorMask(int id)
+    {
+        currentColorMask = id;
+        UpdateColorUI();
+    }
+
+    void SetColor(int id)
+    {
+        mechColors[currentColorMask] = id;
+        UpdateColors();
+    }
 
 	void Start () 
     {
         // TEMP this should probably be loaded in a different script, preferably as soon as the game runs
-
+        FillInColorSquares(currentColorMask);
         AssembleLT(0, 0, false);
         AssembleUT(0, 0, 0, false);
         ChangeWeaponTypeArmL(0);
         ChangeWeaponTypeArmR(0);
         ChangeWeaponTypeGimbalL(0);
+        ConfigureVisualAgent();
 	}
 
     public void SaveCurrentMech()
@@ -229,6 +288,8 @@ public class temp_mechAssemblyUI : MonoBehaviour
         TransferWeapons(ref currentMechConst);
         // TEMP Updates the weapon UI text, this should probably be run in TransferWeapons() instead
         UpdateWeaponUIText();
+        mechVisualAgent.UpdateRendererReferences();
+        UpdateColors();
     }
 
     public void AssembleLT(int legIDAdd, int torsoIDAdd, bool additive)
@@ -307,10 +368,12 @@ public class temp_mechAssemblyUI : MonoBehaviour
 
         // add a new MechIDConst to the new gameobject, then sync all the values and finally remove the old mech
         MechIDConst newMechInfo = currentLowerTorsoObj.AddComponent<MechIDConst>();
+        mechVisualAgent = currentLowerTorsoObj.AddComponent<MechVisualAgent>();
         if (oldLowerTorsoOBJ != null)
         {
             CopyOldMechInfo(oldLowerTorsoOBJ.GetComponent<MechIDConst>(), ref newMechInfo);
             GameObject.Destroy(oldLowerTorsoOBJ);
+            ConfigureVisualAgent();
         }
         else
         {
@@ -323,6 +386,24 @@ public class temp_mechAssemblyUI : MonoBehaviour
 
         // update the reference to the current mech
         currentMechConst = newMechInfo;
+        mechVisualAgent.UpdateRendererReferences();
+        UpdateColors();
+        currentLowerTorsoObj.transform.SetParent(pedestal);
+        currentLowerTorsoObj.transform.localRotation = Quaternion.Euler(-90f, 0f,0f);
+    }
+
+    void ConfigureVisualAgent()
+    {
+        mechVisualAgent.weaponMountL = currentMechConst.weaponMountL;
+        mechVisualAgent.weaponMountR = currentMechConst.weaponMountR;
+        mechVisualAgent.weaponMountGimbalL = currentMechConst.gimbalMountL;
+        mechVisualAgent.weaponMountGimbalR = currentMechConst.gimbalMountR;
+        mechVisualAgent.shieldMountL = currentMechConst.shieldMountL;
+        mechVisualAgent.shieldMountR = currentMechConst.shieldMountR;
+
+        mechVisualAgent.animLowerTorso = animLT;
+        mechVisualAgent.animUpperTorso = animUT;
+        mechVisualAgent.UpdateRendererReferences();
     }
 
 
@@ -348,7 +429,7 @@ public class temp_mechAssemblyUI : MonoBehaviour
             weaponArmL = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[currentMechConst.weaponArmLType].weapons[currentMechConst.weaponArmLID].weaponAsset, mechInfo.weaponMountL) as GameObject;
             weaponArmL.transform.localPosition = Vector3.zero;
             weaponArmL.transform.localRotation = Quaternion.Euler(Vector3.zero);
-
+			mechVisualAgent.animWeaponL = weaponArmL.GetComponent<Animator> ();
 
             if (armType == UTRigAssembler.ArmType.SingleJoint)
             {
@@ -368,6 +449,7 @@ public class temp_mechAssemblyUI : MonoBehaviour
             weaponArmR = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[currentMechConst.weaponArmRType].weapons[currentMechConst.weaponArmRID].weaponAsset, mechInfo.weaponMountR) as GameObject;
             weaponArmR.transform.localPosition = Vector3.zero;
             weaponArmR.transform.localRotation = Quaternion.Euler(Vector3.zero);
+			mechVisualAgent.animWeaponR = weaponArmR.GetComponent<Animator> ();
 
             if (armType == UTRigAssembler.ArmType.SingleJoint)
             {
@@ -387,17 +469,31 @@ public class temp_mechAssemblyUI : MonoBehaviour
             weaponGimbalL = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[currentMechConst.weaponGimbalLType].weapons[currentMechConst.weaponGimbalLID].weaponAsset, mechInfo.gimbalMountL) as GameObject;
             weaponGimbalL.transform.localPosition = Vector3.zero;
             weaponGimbalL.transform.localRotation = Quaternion.Euler(Vector3.zero);
+
+			mechVisualAgent.animGimbalL = weaponGimbalL.GetComponent<Animator> ();
             go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[currentMechConst.weaponGimbalLType].weapons[currentMechConst.weaponGimbalLID].weaponGimbalMountAsset, weaponGimbalL.transform) as GameObject;
             go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = Quaternion.Euler(Vector3.zero);
         }
     }
 
+	void Update()
+	{
+		if (Input.GetKeyDown (KeyCode.Alpha1)) {
+			mechVisualAgent.FireWeapon (0);
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha2)) {
+			mechVisualAgent.FireWeapon (1);
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha3)) {
+			mechVisualAgent.FireWeapon (2);
+		}
+	}
+
     // makes sure all required variables are transfered over on change
     void UpdateMechInfoLower(ref MechIDConst mechInfo)
     {
-        mechInfo.assetNameLowerTorso = MechIDConst.AssetIDToNameLowerTorso(currentLowerTorsoID);
-        mechInfo.assetNameLegs = MechIDConst.AssetIDToNameLegs(currentLegsID);
+
         mechInfo.assetIDLowerTorso = currentLowerTorsoID;
         mechInfo.assetIDLegs = currentLegsID;
 
@@ -417,9 +513,7 @@ public class temp_mechAssemblyUI : MonoBehaviour
     // makes sure all required variables are transfered over on change
     void UpdateMechInfoUpper(ref MechIDConst mechInfo)
     {
-        mechInfo.assetNameHead = MechIDConst.AssetIDToNameHead(currentHeadID);
-        mechInfo.assetNameUpperTorso = MechIDConst.AssetIDToNameUpperTorso(currentUpperTorsoID);
-        mechInfo.assetNameArms = MechIDConst.AssetIDToNameArms(currentArmsID);
+
 
         mechInfo.assetIDHead = currentHeadID;
         mechInfo.assetIDUpperTorso = currentUpperTorsoID;
@@ -430,11 +524,6 @@ public class temp_mechAssemblyUI : MonoBehaviour
     // makes sure all required variables are transfered over on change
     void CopyOldMechInfo(MechIDConst oldMech, ref MechIDConst newMech)
     {
-        newMech.assetNameHead = MechIDConst.AssetIDToNameHead(currentHeadID);
-        newMech.assetNameUpperTorso = MechIDConst.AssetIDToNameUpperTorso(currentUpperTorsoID);
-        newMech.assetNameLowerTorso = MechIDConst.AssetIDToNameLowerTorso(currentLowerTorsoID);
-        newMech.assetNameLegs = MechIDConst.AssetIDToNameLegs(currentLegsID);
-        newMech.assetNameArms = MechIDConst.AssetIDToNameArms(currentArmsID);
 
         newMech.assetIDHead = currentHeadID;
         newMech.assetIDUpperTorso = currentUpperTorsoID;
@@ -532,4 +621,5 @@ public class temp_mechAssemblyUI : MonoBehaviour
         armWpnTypeTextR.text = weaponTypeNames[currentMechConst.weaponArmRType];
         gimbalWpnTypeTextL.text = weaponTypeNames[currentMechConst.weaponGimbalLType];
     }
+    */
 }

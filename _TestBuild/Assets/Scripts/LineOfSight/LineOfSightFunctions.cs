@@ -10,6 +10,7 @@ public static class LineOfSightFunctions
         List<Vector3> p1Corners = _TileCorners(p1);
         Vector3 p2 = new Vector3(theirPos.x, 0, theirPos.z);
         List<Vector3> p2Corners = _TileCorners(p2);
+        int layerMask = LayerMask.GetMask("coverLayer");
 
         int successCount = 0;
         for (int x = 0; x < p1Corners.Count; x++)
@@ -23,35 +24,41 @@ public static class LineOfSightFunctions
                 }
                 else
                 {
-                    if(!Physics.Raycast(p1Corners[x], p1Corners[x] - p2Corners[y], GridPositionDetection.gridDetect.DistCheck(p1Corners[x], p2Corners[y]), 11))
+                    float dist = Vector3.Distance(p1Corners[x], p2Corners[y]);
+                    if(Physics.Raycast(p1Corners[x], p2Corners[y] - p1Corners[x], dist, layerMask))
                     {
                         successCount++;
                     }
+//                    Debug.DrawRay(p1Corners[x], p2Corners[y] - p1Corners[x], Color.red, 200);
                 }
             }
         }
 
         if (successCount >= 10)
         {
+            Debug.DrawRay(yourPos, theirPos - yourPos, Color.red, 200);
             return cover.Full;
         }
         else if (successCount >= 4)
         {
+            Debug.DrawRay(yourPos, theirPos - yourPos, Color.yellow, 200);
             return cover.Half;
         }
         else
         {
+            Debug.DrawRay(yourPos, theirPos - yourPos, Color.blue, 200);
             return cover.None;
         }
     }
 
     private static List<Vector3> _TileCorners(Vector3 tilePos)
     {
-        List<Vector3> tiles = new List<Vector3>();
-        tiles[0] = new Vector3(tilePos.x + 0.5f, 0, tilePos.z + 0.5f);
-        tiles[1] = new Vector3(tilePos.x - 0.5f, 0, tilePos.z + 0.5f);
-        tiles[2] = new Vector3(tilePos.x - 0.5f, 0, tilePos.z - 0.5f);
-        tiles[3] = new Vector3(tilePos.x + 0.5f, 0, tilePos.z - 0.5f);
+        float height = tilePos.y + 1.5f;
+        List<Vector3> tiles = new List<Vector3>(5);
+        tiles.Add(new Vector3(tilePos.x + 0.5f, height, tilePos.z + 0.5f));
+        tiles.Add(new Vector3(tilePos.x - 0.5f, height, tilePos.z + 0.5f));
+        tiles.Add(new Vector3(tilePos.x - 0.5f, height, tilePos.z - 0.5f));
+        tiles.Add(new Vector3(tilePos.x + 0.5f, height, tilePos.z - 0.5f));
         return tiles;            
     }
 
@@ -70,7 +77,7 @@ public static class LineOfSightFunctions
 			}
 		} else 
         {
-            cover coverAmount = _TileSight (PlayerManager.currentPlayer.transform.position, target);
+            cover coverAmount = _TileSight (PlayerManager.currentMech.transform.position, target);
             if (coverAmount == cover.Half || coverAmount == cover.None) 
             {
                 return true;

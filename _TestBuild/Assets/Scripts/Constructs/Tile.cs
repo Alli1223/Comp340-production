@@ -14,6 +14,10 @@ public class Tile
     [SerializeField]
     public bool isWalkable = false, isOnFire = false, isCover = false;
 
+
+    private bool isVisiable = false;
+    public string tileID;
+
     [SerializeField]
     public coverDirection tileCover = coverDirection.NONE;
 
@@ -28,7 +32,7 @@ public class Tile
     /// </summary>
     [SerializeField]
     public Vector3 tPos = Vector3.zero;
-    
+
     /// <summary>
     /// Tile point in cood based on other tiles starting from the closest point to negative x and z. [CurrentObject Number reference, Y position, X position]
     /// </summary>
@@ -40,7 +44,17 @@ public class Tile
     {
         isWalkable = false;
     }
-        
+
+    // Set and get visablity status
+    public void setVisablility(bool IsVisiable)
+    {
+        isVisiable = IsVisiable;
+    }
+    public bool getVisablility()
+    {
+        return isVisiable;
+    }
+
     public virtual void NotWalkable(GameObject occupiedObj)
     {
         isWalkable = false;
@@ -72,4 +86,19 @@ public class Tile
         Ypos = Yposition;
         Xpos = Xposition;
     }
+
+	public void Occupy(GameObject cObj)
+	{
+		LayerMask x = LayerMask.GetMask("coverLayer");
+		occupyingObj = cObj;
+		if (cObj.layer == x) 
+		{
+			tileCover = coverDirection.Building;
+		}
+	}
+
+	public void PolandIsFree()
+	{
+		occupyingObj = null;
+	}
 }

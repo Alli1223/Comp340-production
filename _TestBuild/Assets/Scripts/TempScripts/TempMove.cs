@@ -18,9 +18,9 @@ public class TempMove : MonoBehaviour
 		tManage = ManagersManager.manager;
 
 
-        modifiedMovDist = PlayerManager.currentPlayer.GetComponent<TempPlayerVar>().currentDist;
+        modifiedMovDist = PlayerManager.currentMech.GetComponent<TempPlayerVar>().currentDist;
 
-        playerTile = tManage.tDetect.GetClosestGrid(PlayerManager.currentPlayer.transform.position, tManage.tGrid.currentTiles);
+        playerTile = GridExtentions.GetClosestGrid(PlayerManager.currentMech.transform.position, tManage.tGrid.currentTiles);
 	}
 	
 	// Update is called once per frame
@@ -29,7 +29,7 @@ public class TempMove : MonoBehaviour
 		if (playersTurn) 
 		{
 			ShowMovable ();
-            playerTile = tManage.tDetect.GetClosestGrid (PlayerManager.currentPlayer.transform.position, tManage.tGrid.currentTiles);
+            playerTile = GridExtentions.GetClosestGrid (PlayerManager.currentMech.transform.position, tManage.tGrid.currentTiles);
 			playersTurn = false;
 		}
 		if (!tManage.tPlayer.shootingMode) 
@@ -49,13 +49,13 @@ public class TempMove : MonoBehaviour
 				
 		}
 
-        if(moveToPos != null && modifiedMovDist > 0 && PlayerManager.currentPlayer.GetComponent<TempPlayerVar>().currentAP > 0)
+        if(moveToPos != null && modifiedMovDist > 0 && PlayerManager.currentMech.GetComponent<TempPlayerVar>().currentAP > 0)
 		{
-            PlayerManager.currentPlayer.transform.position = Vector3.MoveTowards (PlayerManager.currentPlayer.transform.position, new Vector3 (moveToPos.position.x, PlayerManager.currentPlayer.transform.position.y, moveToPos.position.z), 7);
+            PlayerManager.currentMech.transform.position = Vector3.MoveTowards (PlayerManager.currentMech.transform.position, new Vector3 (moveToPos.position.x, PlayerManager.currentMech.transform.position.y, moveToPos.position.z), 7);
 
-            Transform newCurrentTile = tManage.tDetect.GetClosestGrid (PlayerManager.currentPlayer.transform.position, tManage.tGrid.currentTiles);
+            Transform newCurrentTile = GridExtentions.GetClosestGrid (PlayerManager.currentMech.transform.position, tManage.tGrid.currentTiles);
 				modifiedMovDist = tManage.tDetect.DistModifier (playerTile, newCurrentTile, modifiedMovDist);
-            PlayerManager.currentPlayer.GetComponent<TempPlayerVar> ().currentAP -= tManage.tDetect.DistCheck (playerTile.position, moveToPos.position);
+            PlayerManager.currentMech.GetComponent<TempPlayerVar> ().currentAP -= GridExtentions.DistCheck (playerTile.position, moveToPos.position);
 				playerTile = newCurrentTile;
 				playersTurn = true;
 				moveToPos = null;
@@ -66,15 +66,15 @@ public class TempMove : MonoBehaviour
 
     public void ShowMovable()
     {
-        modifiedMovDist = PlayerManager.currentPlayer.GetComponent<TempPlayerVar>().currentDist;
-        playerTile = tManage.tDetect.GetClosestGrid(PlayerManager.currentPlayer.transform.position, tManage.tGrid.currentTiles);
+        modifiedMovDist = PlayerManager.currentMech.GetComponent<TempPlayerVar>().currentDist;
+        playerTile = GridExtentions.GetClosestGrid(PlayerManager.currentMech.transform.position, tManage.tGrid.currentTiles);
 		int range;
-        if (modifiedMovDist < PlayerManager.currentPlayer.GetComponent<TempPlayerVar> ().currentAP) 
+        if (modifiedMovDist < PlayerManager.currentMech.GetComponent<TempPlayerVar> ().currentAP) 
 		{
 			range = modifiedMovDist;
 		}else
 		{
-            range = PlayerManager.currentPlayer.GetComponent<TempPlayerVar> ().currentAP;
+            range = PlayerManager.currentMech.GetComponent<TempPlayerVar> ().currentAP;
 		}
 		tManage.tDetect.FindTilesInDist(playerTile, tManage.tGrid.tileMeshs, (float)range);
 		if (tManage.tGrid.tileMeshs [0].material.color == tManage.actionMat.color) 
@@ -90,8 +90,8 @@ public class TempMove : MonoBehaviour
 	List<GameObject> enemies = new List<GameObject> ();
 	public void ShootMode()
 	{
-        playerTile = tManage.tDetect.GetClosestGrid(PlayerManager.currentPlayer.transform.position, tManage.tGrid.currentTiles);
-        tManage.tDetect.FindTilesInDist (playerTile, tManage.tGrid.tileMeshs, (float)PlayerManager.currentPlayer.GetComponent<TempPlayerVar> ().shootRange);
+        playerTile = GridExtentions.GetClosestGrid(PlayerManager.currentMech.transform.position, tManage.tGrid.currentTiles);
+        tManage.tDetect.FindTilesInDist (playerTile, tManage.tGrid.tileMeshs, (float)PlayerManager.currentMech.GetComponent<TempPlayerVar> ().shootRange);
 		foreach (MeshRenderer x in tManage.tGrid.tileMeshs) 
 		{
 			x.material.color = tManage.actionMat.color;
@@ -99,7 +99,7 @@ public class TempMove : MonoBehaviour
 		enemies.AddRange (GameObject.FindGameObjectsWithTag ("enemy"));
 		foreach (GameObject e in enemies) 
 		{
-            if (tManage.tDetect.DistCheck (PlayerManager.currentPlayer.transform.position, e.transform.position) > PlayerManager.currentPlayer.GetComponent<TempPlayerVar> ().shootRange) 
+            if (GridExtentions.DistCheck (PlayerManager.currentMech.transform.position, e.transform.position) > PlayerManager.currentMech.GetComponent<TempPlayerVar> ().shootRange) 
 			{
 				e.GetComponent<MeshRenderer> ().material.color = Color.blue;
 			} else 
