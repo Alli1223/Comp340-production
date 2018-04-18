@@ -394,6 +394,7 @@ public class PlayerMovement : MonoBehaviour
         for (int i = 0; i < currentMoveableTiles.Count; i++)
         {
             currentMoveableTiles[i].thisTile.SetActive(true);
+            Vector3 pos = currentMoveableTiles[i].thisTile.transform.position;
         }
 
     }
@@ -424,5 +425,20 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
+
+    //! Edited by alli on 18/04/18
+    public void FogOfWarRange(int range)
+    {
+        currentMoveableTiles = GridExtentions._TilesInARange(currTile.tPos, range);
+
+        for (int i = 0; i < currentMoveableTiles.Count; i++)
+        {
+            currentMoveableTiles[i].thisTile.SetActive(true);
+            Vector3 pos = currentMoveableTiles[i].thisTile.transform.position;
+        }
+    }
+
+    // Edit end
 
 }
