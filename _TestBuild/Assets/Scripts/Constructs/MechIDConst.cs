@@ -148,10 +148,12 @@ public class MechIDConst : MonoBehaviour
         MechIDConst mechIDConst = lowerTorso.AddComponent<MechIDConst>();
         NavMeshAgent navMeshAgent = lowerTorso.AddComponent<NavMeshAgent>();
 
+        mechInfo.mechID = mechIDConst;
         mechIDConst.data = mechData;
         visualAgent.mechID = mechIDConst;
         visualAgent.upperTorsoParent = upperTorsoParent;
         visualAgent.animLowerTorso = lowerTorsoAnimator;
+        navMeshAgent.radius = 0.2f;
         int armAssetID = PartsDataBase.Instance.mechPartType[(int)PartType.Arms].part[mechData.armsID].assetID;
 
         UTRigAssembler.Instance.AssembleUpperTorso(
@@ -171,6 +173,7 @@ public class MechIDConst : MonoBehaviour
             mechInfo.hasLeftArmWeapon = true;
             go = GameObject.Instantiate(mechInfo.leftArmWeapon.weaponAsset, visualAgent.weaponMountL) as GameObject;
             visualAgent.animWeaponL = go.GetComponent<Animator>();
+            visualAgent.particleInfoArmL = go.GetComponent<WeaponParticleInfo>();
             go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = Quaternion.Euler(Vector3.zero);
             go.transform.localScale = Vector3.one;
@@ -195,7 +198,8 @@ public class MechIDConst : MonoBehaviour
             mechInfo.rightArmWeapon = WeaponDataBase.Instance.weaponTypeArray[mechData.weaponArmRType].weapons[mechData.weaponArmRID];
             mechInfo.hasRightArmWeapon = true;
             go = GameObject.Instantiate(mechInfo.rightArmWeapon.weaponAsset, visualAgent.weaponMountR) as GameObject;
-            visualAgent.animWeaponL = go.GetComponent<Animator>();
+            visualAgent.animWeaponR = go.GetComponent<Animator>();
+            visualAgent.particleInfoArmR = go.GetComponent<WeaponParticleInfo>();
             go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = Quaternion.Euler(Vector3.zero);
             go.transform.localScale = Vector3.one;
@@ -219,7 +223,8 @@ public class MechIDConst : MonoBehaviour
             mechInfo.backWeapon = WeaponDataBase.Instance.weaponTypeArray[mechData.weaponGimbalLType].weapons[mechData.weaponGimbalLID];
             mechInfo.hasBackWeapon = true;
             go = GameObject.Instantiate(mechInfo.backWeapon.weaponAsset, visualAgent.weaponMountGimbalL) as GameObject;
-            visualAgent.animWeaponL = go.GetComponent<Animator>();
+            visualAgent.animGimbalL = go.GetComponent<Animator>();
+            visualAgent.particleInfoGimbL = go.GetComponent<WeaponParticleInfo>();
             go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = Quaternion.Euler(Vector3.zero);
             go.transform.localScale = Vector3.one;
@@ -234,7 +239,8 @@ public class MechIDConst : MonoBehaviour
         if (visualAgent.mechID.data.hasWeaponGimbalR)
         {
             go = GameObject.Instantiate(WeaponDataBase.Instance.weaponTypeArray[mechData.weaponGimbalRType].weapons[mechData.weaponGimbalRID].weaponAsset, visualAgent.weaponMountGimbalR) as GameObject;
-            visualAgent.animWeaponL = go.GetComponent<Animator>();
+            visualAgent.animGimbalR = go.GetComponent<Animator>();
+            visualAgent.particleInfoGimbR = go.GetComponent<WeaponParticleInfo>();
             go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = Quaternion.Euler(Vector3.zero);
             go.transform.localScale = Vector3.one;
@@ -264,6 +270,8 @@ public class MechIDConst : MonoBehaviour
         PassiveBonus pb = PartsDataBase.CalculateTotalBonus(mechData.headID, mechData.upperTorsoID, mechData.lowerTorsoID, mechData.legsID, mechData.armsID);
 
         mechInfo.maxMoveDist = PartsDataBase.CalculateTotalMovement(PartsDataBase.CalculateTotalWeight(mechData), pb.bonusMovement);
+
+        mechInfo.visualAgent = visualAgent;
 
 
 

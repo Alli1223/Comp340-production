@@ -1,0 +1,251 @@
+D:\TEam Name\Strategy Prototype\Strategy In Engine\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\Assembly-CSharp.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\Assembly-CSharp.pdb
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\nunit.framework.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEditor.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEngine.Analytics.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEngine.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEngine.HoloLens.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEngine.Networking.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEngine.TestRunner.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEngine.UI.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEngine.VR.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\Mono.Cecil.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\Unity.SerializationLogic.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\Unity.DataContract.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\Unity.UNetWeaver.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\Unity.CecilTools.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\Mono.Cecil.Mdb.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEngine.xml
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEditor.xml
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEngine.UI.xml
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEngine.Networking.xml
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEngine.TestRunner.xml
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\nunit.framework.xml
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEngine.Analytics.xml
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEngine.HoloLens.xml
+D:\TEam Name\Strategy Prototype\Strategy In Engine\Temp\bin\Debug\UnityEngine.VR.xml
+D:\TEam Name\Strategy Prototype\Strategy In Engine\obj\Debug\Assembly-CSharp.dll
+D:\TEam Name\Strategy Prototype\Strategy In Engine\obj\Debug\Assembly-CSharp.pdb
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\obj\Debug\Assembly-CSharp.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\Assembly-CSharp.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\Assembly-CSharp.pdb
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\nunit.framework.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEditor.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEngine.Analytics.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEngine.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEngine.HoloLens.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEngine.Networking.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEngine.TestRunner.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEngine.UI.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEngine.VR.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\Mono.Cecil.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\Unity.SerializationLogic.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\Unity.DataContract.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\Unity.UNetWeaver.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\Unity.CecilTools.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\Mono.Cecil.Mdb.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEngine.xml
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEditor.xml
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEngine.UI.xml
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEngine.Networking.xml
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEngine.TestRunner.xml
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\nunit.framework.xml
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEngine.Analytics.xml
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEngine.HoloLens.xml
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\Temp\bin\Debug\UnityEngine.VR.xml
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\Marc Andrews\obj\Debug\Assembly-CSharp.pdb
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Assembly-CSharp.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Assembly-CSharp.pdb
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\nunit.framework.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEditor.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.Analytics.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.HoloLens.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.Networking.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.TestRunner.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.UI.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.VR.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Mono.Cecil.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Unity.SerializationLogic.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Unity.DataContract.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Unity.UNetWeaver.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Unity.CecilTools.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Mono.Cecil.Mdb.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.xml
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEditor.xml
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.UI.xml
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.Networking.xml
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.TestRunner.xml
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\nunit.framework.xml
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.Analytics.xml
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.HoloLens.xml
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.VR.xml
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\obj\Debug\Assembly-CSharp.dll
+D:\P4\az180983_052TGADS-60354_2885\1718_L3_SaltMine\_TestBuild\obj\Debug\Assembly-CSharp.pdb
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Assembly-CSharp.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Assembly-CSharp.pdb
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\nunit.framework.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEditor.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.Analytics.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.HoloLens.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.Networking.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.TestRunner.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.UI.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.VR.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Mono.Cecil.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Unity.SerializationLogic.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Unity.DataContract.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Unity.UNetWeaver.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Unity.CecilTools.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\Mono.Cecil.Mdb.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.xml
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEditor.xml
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.UI.xml
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.Networking.xml
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.TestRunner.xml
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\nunit.framework.xml
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.Analytics.xml
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.HoloLens.xml
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\Temp\bin\Debug\UnityEngine.VR.xml
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\obj\Debug\Assembly-CSharp.dll
+D:\P4\az180983_052TGADS-60338_3578\1718_L3_SaltMine\_TestBuild\obj\Debug\Assembly-CSharp.pdb
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\Assembly-CSharp.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\Assembly-CSharp.pdb
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\nunit.framework.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEditor.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEngine.Analytics.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEngine.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEngine.HoloLens.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEngine.Networking.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEngine.TestRunner.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEngine.UI.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEngine.VR.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\Mono.Cecil.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\Unity.SerializationLogic.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\Unity.DataContract.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\Unity.UNetWeaver.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\Unity.CecilTools.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\Mono.Cecil.Mdb.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEngine.xml
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEditor.xml
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEngine.UI.xml
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEngine.Networking.xml
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEngine.TestRunner.xml
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\nunit.framework.xml
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEngine.Analytics.xml
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEngine.HoloLens.xml
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\Temp\bin\Debug\UnityEngine.VR.xml
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\obj\Debug\Assembly-CSharp.dll
+D:\P4\az180983_052TGADS-60486_5197\_TestBuild\obj\Debug\Assembly-CSharp.pdb
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\Assembly-CSharp.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\Assembly-CSharp.pdb
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\nunit.framework.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEditor.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEngine.Analytics.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEngine.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEngine.HoloLens.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEngine.Networking.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEngine.TestRunner.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEngine.UI.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEngine.VR.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\Mono.Cecil.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\Unity.SerializationLogic.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\Unity.DataContract.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\Unity.UNetWeaver.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\Unity.CecilTools.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\Mono.Cecil.Mdb.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEngine.xml
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEditor.xml
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEngine.UI.xml
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEngine.Networking.xml
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEngine.TestRunner.xml
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\nunit.framework.xml
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEngine.Analytics.xml
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEngine.HoloLens.xml
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\Temp\bin\Debug\UnityEngine.VR.xml
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\obj\Debug\Assembly-CSharp.dll
+D:\P4\az180983_052TGADS-60338_4806\_TestBuild\obj\Debug\Assembly-CSharp.pdb
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\Assembly-CSharp.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\Assembly-CSharp.pdb
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\nunit.framework.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEditor.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEngine.Analytics.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEngine.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEngine.HoloLens.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEngine.Networking.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEngine.TestRunner.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEngine.UI.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEngine.VR.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\Mono.Cecil.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\Unity.SerializationLogic.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\Unity.DataContract.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\Unity.UNetWeaver.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\Unity.CecilTools.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\Mono.Cecil.Mdb.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEngine.xml
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEditor.xml
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEngine.UI.xml
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEngine.Networking.xml
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEngine.TestRunner.xml
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\nunit.framework.xml
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEngine.Analytics.xml
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEngine.HoloLens.xml
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\Temp\bin\Debug\UnityEngine.VR.xml
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\obj\Debug\Assembly-CSharp.dll
+D:\P4\az180983_052TGADS-60486_8543\_TestBuild\obj\Debug\Assembly-CSharp.pdb
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\_TestBuild\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\_TestBuild\obj\Debug\Assembly-CSharp.dll
+D:\P4\MA180716_052TGADS-60487_6980\1718_L3_SaltMine\_TestBuild\obj\Debug\Assembly-CSharp.pdb
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\Assembly-CSharp.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\Assembly-CSharp.pdb
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\nunit.framework.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEditor.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEngine.Analytics.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEngine.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEngine.HoloLens.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEngine.Networking.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEngine.TestRunner.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEngine.UI.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEngine.VR.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\Mono.Cecil.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\Unity.SerializationLogic.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\Unity.DataContract.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\Unity.UNetWeaver.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\Unity.CecilTools.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\Mono.Cecil.Mdb.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEngine.xml
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEditor.xml
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEngine.UI.xml
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEngine.Networking.xml
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEngine.TestRunner.xml
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\nunit.framework.xml
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEngine.Analytics.xml
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEngine.HoloLens.xml
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\Temp\bin\Debug\UnityEngine.VR.xml
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\obj\Debug\Assembly-CSharp.dll
+D:\P4\az180983_052TGADS-60354_4652\_TestBuild\obj\Debug\Assembly-CSharp.pdb

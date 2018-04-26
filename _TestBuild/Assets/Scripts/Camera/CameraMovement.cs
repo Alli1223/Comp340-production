@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿	using UnityEngine;
 using System.Collections;
 
 public class CameraMovement : MonoBehaviour
@@ -22,11 +22,13 @@ public class CameraMovement : MonoBehaviour
 	private Camera mainCamera;
 	private GameObject cameraHolder;
 	private GameObject target;
-	private float horizontalRotation;
-	private float verticalRotation;
+	private float horizontalRotation ;
+	private float verticalRotation ;
 	private CameraManager camManger;
 	private ManagersManager tManage;
 	private Vector3 moveDirection = Vector3.zero;
+	public float speed =75;
+	private bool swapTarget;
 
 	// Use this for initialization
 	void Start()
@@ -36,15 +38,19 @@ public class CameraMovement : MonoBehaviour
 		mainCamera = GetComponentInChildren<Camera>();
 		cameraHolder = gameObject;
 		ChangeCameraTarget ();
-		
+
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		//Vector3 targetInfo = target.transform.transform.position;
-	   // cameraHolder.transform.position = new Vector3(targetInfo.x , targetInfo.y , targetInfo.z );
-		
+		if (swapTarget == true) {
+			Vector3 targetInfo = target.transform.transform.position;
+			float step = speed * Time.deltaTime;
+			cameraHolder.transform.position = Vector3.MoveTowards(cameraHolder.transform.position,target.transform.transform.position, step);
+			if(cameraHolder.transform.position == target.transform.position)
+			swapTarget = false;
+		}
 		if (Input.GetKey(KeyCode.Mouse2))
 		{
 			Vector3 newRotation = new Vector3(0, horizontalRotation, verticalRotation);
@@ -118,13 +124,8 @@ public class CameraMovement : MonoBehaviour
 
 	public void ChangeCameraTarget()
 	{
-		if (tManage.tTurn.playersTurn == true)
-		{
+		
             target = PlayerManager.currentMech.gameObject;
-		}
-		else if (tManage.tTurn.playersTurn == false)
-		{
-			target = EnemyManager.currentEnemy;
-		}
+			swapTarget = true;
 	}
 }

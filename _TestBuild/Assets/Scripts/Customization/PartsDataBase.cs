@@ -88,7 +88,7 @@ public class PartsDataBase : ScriptableObject
 
     public static int CalculateTotalMovement(int totalWeight, int bonusMovement)
     {
-        return maxMovement[totalWeight] + bonusMovement;
+        return Mathf.Clamp(maxMovement[totalWeight] + bonusMovement, 5, 15);
     }
 
     public static int CalculateTotalVision(int bonus)

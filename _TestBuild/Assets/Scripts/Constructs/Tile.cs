@@ -14,8 +14,6 @@ public class Tile
     [SerializeField]
     public bool isWalkable = false, isOnFire = false, isCover = false;
 
-
-    private bool isVisiable = false;
     public string tileID;
 
     [SerializeField]
@@ -44,17 +42,7 @@ public class Tile
     {
         isWalkable = false;
     }
-
-    // Set and get visablity status
-    public void setVisablility(bool IsVisiable)
-    {
-        isVisiable = IsVisiable;
-    }
-    public bool getVisablility()
-    {
-        return isVisiable;
-    }
-
+        
     public virtual void NotWalkable(GameObject occupiedObj)
     {
         isWalkable = false;

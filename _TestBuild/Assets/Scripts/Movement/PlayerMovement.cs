@@ -50,17 +50,17 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetPlayer()
     {
-        currPlayer = PlayerManager.currentMech.transform;
-        currPlayAI = currPlayer.GetComponent<NavMeshAgent>();
-        currPlayData = currPlayer.GetComponent<PlayerData>();
-        currTile = currPlayData.curTile;
+//        currPlayer = PlayerManager.currentMech.transform;
+//        currPlayAI = currPlayer.GetComponent<NavMeshAgent>();
+//        currPlayData = currPlayer.GetComponent<PlayerData>();
+//        currTile = currPlayData.curTile;
 
         if (shootingMode)
         {
             shootingMode = !shootingMode;
         }
 
-        ShowMovable(currPlayer.position, currPlayData.CurrMoveRange());
+//        ShowMovable(currPlayer.position, currPlayData.CurrMoveRange());
     }
 	
 	// Update is called once per frame
@@ -105,7 +105,11 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-
+        if (shootingMode && currPlayData.GetWeaponScatter(currWeapon) > 0)
+        {
+            ShowShootingRange(currPlayData.transform.position, currPlayData.GetWeaponMinRange(currWeapon), currPlayData.GetWeaponMaxRange(currWeapon), 
+                currPlayData.GetWeaponScatter(currWeapon), currPlayData.WeaponTargetsDirectly(currWeapon));
+        }
 
         if (pendingAction != PlayerActions.NONE)
         {
@@ -129,33 +133,69 @@ public class PlayerMovement : MonoBehaviour
         }
 	}
 
+
+
     public void UpdateMe(Tile x, PlayerActions b)
     {
         if (!actionPending)
         {
             if (!shootingMode && x.occupyingObj == null)
             {
-                moveToPoint = x.tPos;
+                if (GridExtentions.CheapDistCheck(currPlayData.transform.position, x.tPos) <= currPlayData.CurrMoveRange())
+                {
+                    moveToPoint = x.tPos;
 
-                pendingAction = PlayerActions.Move;
-                actionPending = true;
-
-                    
+                    pendingAction = PlayerActions.Move;
+                    actionPending = true;
+                }
+   
             }
             else
             {
-                if (x.occupyingObj != null)
+                if (!currPlayData.HasWeaponFired(currWeapon))
                 {
-                    PlayerData pd = x.occupyingObj.GetComponent<PlayerData>();
-                    if (pd.playerNum != currPlayData.playerNum)
+                    if (currPlayData.WeaponTargetsDirectly(currWeapon))
                     {
-                        if (currPlayData.GetWeaponMaxRange(currWeapon) >= GridExtentions.DistCheck(currPlayer.transform.position, x.tPos))
+                        if (x.occupyingObj != null)
                         {
-                            currPlayData.FireWeapon(currWeapon, pd);
+                            if (LineOfSightFunctions._TileSight(currPlayData.curTile.tPos, x.tPos) != cover.Full)
+                            {
+                                PlayerData pd = x.occupyingObj.GetComponent<PlayerData>();
+                                if (pd.playerNum != currPlayData.playerNum)
+                                {
+                                    int targetDistance = GridExtentions.DistCheck(currPlayer.transform.position, x.tPos);
+                                    if (targetDistance <= currPlayData.GetWeaponMaxRange(currWeapon) && targetDistance >= currPlayData.GetWeaponMinRange(currWeapon))
+                                    {
+                                        PlayerManager.StartCinematic(currPlayData.visualAgent.GetCinematicTimeOfWeapon(currWeapon));
+                                        WeaponFiringTypes.shooter = currPlayData;
+                                        currPlayData.visualAgent.TorsoTwistAt(pd.visualAgent.upperTorsoParent.position, currPlayData.visualAgent.GetCinematicTimeOfWeapon(currWeapon));
+                                        //currPlayData.visualAgent.FireWeapon(currWeapon, pd.visualAgent.upperTorsoParent.position);
+                                        currPlayData.FireWeapon(currWeapon, pd);
+                                        shootingMode = false;
+                                        pendingAction = PlayerActions.NONE;
+                                        ShowMovable(currTile.thisTile.transform.position, currPlayData.CurrMoveRange());
+                                        EndAction();
+                                        tManage.tPlayer.gamePlayUI.HideWeaponStats();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        int targetDistance = GridExtentions.DistCheck(currPlayer.transform.position, x.tPos);
+                        if (targetDistance <= currPlayData.GetWeaponMaxRange(currWeapon) && targetDistance >= currPlayData.GetWeaponMinRange(currWeapon))
+                        {
+                            PlayerManager.StartCinematic(currPlayData.visualAgent.GetCinematicTimeOfWeapon(currWeapon));
+                            WeaponFiringTypes.shooter = currPlayData;
+                            currPlayData.visualAgent.TorsoTwistAt(x.tPos, currPlayData.visualAgent.GetCinematicTimeOfWeapon(currWeapon));
+                            //currPlayData.visualAgent.FireWeapon(currWeapon, x.tPos);
+                            currPlayData.FireWeapon(currWeapon, x);
                             shootingMode = false;
+                            pendingAction = PlayerActions.NONE;
                             ShowMovable(currTile.thisTile.transform.position, currPlayData.CurrMoveRange());
-                            //ShowMovable(currTile.thisTile.transform, currPlayData.CurrMoveRange());
                             EndAction();
+                            tManage.tPlayer.gamePlayUI.HideWeaponStats();
                         }
                     }
                 }
@@ -188,10 +228,12 @@ public class PlayerMovement : MonoBehaviour
                 currTile = currPlayData.curTile;
                 if (shootingMode)
                 {
+                    tManage.tPlayer.gamePlayUI.ShowWeaponStats(currWeapon);
                     ShootingMode(currTile.thisTile.transform);
                 }
                 else
                 {
+                    tManage.tPlayer.gamePlayUI.HideWeaponStats();
                     ShowMovable(currTile.thisTile.transform.position, currPlayData.CurrMoveRange());
                 }
                 nextPlayersTurn = false;
@@ -239,13 +281,13 @@ public class PlayerMovement : MonoBehaviour
                 shootingMode = !shootingMode;
                 if (shootingMode)
                 {
-//                    HideMovable();
-                    //Shoot mode tbc
+                    tManage.tPlayer.gamePlayUI.ShowWeaponStats(currWeapon);
 					ShootingMode(currTile.thisTile.transform);
                     EndAction();
                 }
                 else
                 {
+                    tManage.tPlayer.gamePlayUI.HideWeaponStats();
                     ShowMovable(currTile.thisTile.transform.position, currPlayData.CurrMoveRange());
                     EndAction();
                 }
@@ -324,6 +366,7 @@ public class PlayerMovement : MonoBehaviour
             tManage.tTurn.RemoveFromAction(currPlayer.gameObject);
 
         }
+		tManage.tPlayer.gamePlayUI.UpdateStatPanel();
     }
 
     private void EndMoveAction()
@@ -349,35 +392,21 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             ShowMovable(currTile.tPos, currPlayData.CurrMoveRange());
+            tManage.tPlayer.UpdateCurrentMechPos();
         }
     }
 
     void ShootingMode(Transform pTile)
-    {
-        List<GameObject> enemies = new List<GameObject>();
+	{
+		List<GameObject> enemies = new List<GameObject>();
 
-        tManage.tDetect.FindTilesInDist (pTile, tManage.tGrid.tileMeshs, currPlayData.GetWeaponMaxRange(currWeapon));
-        ShowMovable(pTile.position, currPlayData.GetWeaponMaxRange(currWeapon), false);
-//        foreach (MeshRenderer x in tManage.tGrid.tileMeshs) 
-//        {
-//            x.material.color = tManage.actionMat.color;
-//        }
-        enemies.AddRange (GameObject.FindGameObjectsWithTag ("Player"));
-        foreach (GameObject e in enemies) 
-        {
-            if (currPlayData.playerNum != e.GetComponent<PlayerData>().playerNum)
-            {
-                if (GridExtentions.DistCheck(PlayerManager.currentMech.transform.position, e.transform.position) > currPlayData.GetWeaponMaxRange(currWeapon))
-                {
-//                    e.GetComponent<MeshRenderer>().material.color = Color.blue;
-                }
-                else
-                {
-//                    e.GetComponent<MeshRenderer>().material.color = Color.red;
-                }
-            }
+		Weapon currentWeaponUsed = currPlayData.GetWeapon(currWeapon);
 
-        }
+
+		tManage.tDetect.FindTilesInDist(pTile, tManage.tGrid.tileMeshs, currPlayData.GetWeaponMaxRange(currWeapon));
+		//ShowMovable(pTile.position, currentWeaponUsed.maxRange, false);
+
+		ShowShootingRange(pTile.position, currentWeaponUsed.minRange, currentWeaponUsed.maxRange, currPlayData.WeaponTargetsDirectly(currWeapon));
     }
 
 
@@ -389,14 +418,51 @@ public class PlayerMovement : MonoBehaviour
 
         currentMoveableTiles = GridExtentions._TilesInARange(currTile.tPos, range);
 
-        GridExtentions.SetMaterial(defaultMaterial);
+        GridExtentions.SetMaterial(0);
 
         for (int i = 0; i < currentMoveableTiles.Count; i++)
         {
             currentMoveableTiles[i].thisTile.SetActive(true);
-            Vector3 pos = currentMoveableTiles[i].thisTile.transform.position;
         }
 
+    }
+
+    public void ShowShootingRange(Vector3 origin, int minRange, int maxRange, bool checkLOS = true)
+    {
+        HideMovable();
+        currentMoveableTiles = GridExtentions._TilesInRangeMinMax(origin, minRange, maxRange);
+
+        GridExtentions.SetMaterial(1);
+
+        if (checkLOS)
+        {
+            for (int i = currentMoveableTiles.Count - 1; i > -1; i--)
+            {
+                    if (LineOfSightFunctions._TileSight(origin, currentMoveableTiles[i].tPos) == cover.Full)
+                    {
+                        currentMoveableTiles.RemoveAt(i);
+                    }
+            }
+        }
+
+        for (int i = 0; i < currentMoveableTiles.Count; i++)
+        {
+            currentMoveableTiles[i].thisTile.SetActive(true);
+        }
+    }
+
+    public void ShowShootingRange(Vector3 origin, int minRange, int maxRange, int scatterRange, bool checkLOS = true)
+    {
+        ShowShootingRange(origin, minRange, maxRange, checkLOS);
+
+        List<Tile> tilesInRange = GridExtentions.SetMaterialOverlay(1, tManage.tPlayer.mousePosOnGrid, scatterRange);
+
+        for (int i = 0; i < tilesInRange.Count; i++)
+        {
+            tilesInRange[i].thisTile.SetActive(true);
+        }
+
+        currentMoveableTiles.AddRange(tilesInRange);
     }
 
     public void HideMovable()
@@ -425,20 +491,5 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
-
-    //! Edited by alli on 18/04/18
-    public void FogOfWarRange(int range)
-    {
-        currentMoveableTiles = GridExtentions._TilesInARange(currTile.tPos, range);
-
-        for (int i = 0; i < currentMoveableTiles.Count; i++)
-        {
-            currentMoveableTiles[i].thisTile.SetActive(true);
-            Vector3 pos = currentMoveableTiles[i].thisTile.transform.position;
-        }
-    }
-
-    // Edit end
 
 }

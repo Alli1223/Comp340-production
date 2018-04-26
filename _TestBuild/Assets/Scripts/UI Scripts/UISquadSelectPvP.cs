@@ -311,86 +311,111 @@ public class UISquadSelectPvP : MonoBehaviour
     List<SpawnPoint> spawnPointsPlayer1 = new List<SpawnPoint>();
     List<SpawnPoint> spawnPointsPlayer2 = new List<SpawnPoint>();
 
-    public void StartGame()
+    public bool CheckIfMechsAreSelected()
     {
-        int currentSpawnIndex1 = 0;
-        int maxSpawnIndex1 = spawnPointsPlayer1.Count;
-        int currentSpawnIndex2 = 0;
-        int maxSpawnIndex2 = spawnPointsPlayer2.Count;
+        int failures = 0;
+        for (int i = 0; i < maxMechsAllowed; i++)
+        {
+            if (player1SelectedMechsID[i] == -1)
+                failures++;
+        }
 
-        GameObject go = GameObject.Find("Manager");
+        if (failures == maxMechsAllowed)
+            return false;
 
-        PlayerManager pm = go.GetComponent<PlayerManager>();
-        pm.allPlayerMechs.Add(new List<PlayerData>());
-        pm.allPlayerMechs.Add(new List<PlayerData>());
+        failures = 0;
 
         for (int i = 0; i < maxMechsAllowed; i++)
         {
-            if (currentSpawnIndex1 < maxSpawnIndex1)
-            {
-                if (player1SelectedMechsID[i] >= 0)
-                {
-                    GameObject temp = MechIDConst.SpawnMech(
-                        spawnPointsPlayer1[currentSpawnIndex1].transform.position, 
-                        spawnPointsPlayer1[currentSpawnIndex1].transform.rotation,
-                        MechSaveData.LoadMech(playerProfiles[player1ProfileID], player1MechNames[player1SelectedMechsID[i]]), true);
-
-                    UIHealthBar tempHealthBar = GameObject.Instantiate(healthBarPrefab, transform).GetComponent<UIHealthBar>();
-                    PlayerData tempPlayer = temp.GetComponent<PlayerData>();
-
-                    tempPlayer.myHealthBar = tempHealthBar;
-                    tempHealthBar.target = tempPlayer.transform;
-                    tempHealthBar.SetColor(Color.cyan);
-
-                    tempPlayer.curTile = spawnPointsPlayer1[currentSpawnIndex1].closestTile;
-                    tempPlayer.playerNum = 0;
-//                    PlayerManager.gPlayer.firstPlayers.Add(temp);
-                    spawnPointsPlayer1[currentSpawnIndex1].closestTile.occupyingObj = temp;
-                    currentSpawnIndex1++;
-
-                    tempPlayer.Initialize(pm, 0);
-                }
-            }
-
-            if (currentSpawnIndex2 < maxSpawnIndex2)
-            {
-                if (player2SelectedMechsID[i] >= 0)
-                {
-                    GameObject temp = MechIDConst.SpawnMech(
-                        spawnPointsPlayer2[currentSpawnIndex2].transform.position, 
-                        spawnPointsPlayer2[currentSpawnIndex2].transform.rotation,
-                        MechSaveData.LoadMech(playerProfiles[player2ProfileID], player2MechNames[player2SelectedMechsID[i]]), true);
-
-                    UIHealthBar tempHealthBar = GameObject.Instantiate(healthBarPrefab, transform).GetComponent<UIHealthBar>();
-                    PlayerData tempPlayer = temp.GetComponent<PlayerData>();
-
-                    tempPlayer.myHealthBar = tempHealthBar;
-                    tempHealthBar.target = tempPlayer.transform;
-                    tempHealthBar.SetColor(Color.red);
-
-                    tempPlayer.curTile = spawnPointsPlayer2[currentSpawnIndex2].closestTile;
-                    tempPlayer.playerNum = 1;
-//                    PlayerManager.gPlayer.secondPlayers.Add(temp);
-                    spawnPointsPlayer2[currentSpawnIndex2].closestTile.occupyingObj = temp;
-                    currentSpawnIndex2++;
-
-                    tempPlayer.Initialize(pm, 1);
-                }
-            }
+            if (player2SelectedMechsID[i] == -1)
+                failures++;
         }
 
-        gamePlayUI.SetActive(true);
-        pm.enabled = true;
-        pm.SpawnDone();
-        UIprefab.SetActive(false);
+        if (failures == maxMechsAllowed)
+            return false;
+
+        return true;
+    }
+
+    public void StartGame()
+    {
+        if (CheckIfMechsAreSelected())
+        {
+            int currentSpawnIndex1 = 0;
+            int maxSpawnIndex1 = spawnPointsPlayer1.Count;
+            int currentSpawnIndex2 = 0;
+            int maxSpawnIndex2 = spawnPointsPlayer2.Count;
+
+            GameObject go = GameObject.Find("Manager");
+
+            PlayerManager pm = go.GetComponent<PlayerManager>();
+            pm.allPlayerMechs.Add(new List<PlayerData>());
+            pm.allPlayerMechs.Add(new List<PlayerData>());
+
+            for (int i = 0; i < maxMechsAllowed; i++)
+            {
+                if (currentSpawnIndex1 < maxSpawnIndex1)
+                {
+                    if (player1SelectedMechsID[i] >= 0)
+                    {
+                        GameObject temp = MechIDConst.SpawnMech(
+                                          spawnPointsPlayer1[currentSpawnIndex1].transform.position, 
+                                          spawnPointsPlayer1[currentSpawnIndex1].transform.rotation,
+                                          MechSaveData.LoadMech(playerProfiles[player1ProfileID], player1MechNames[player1SelectedMechsID[i]]), true);
+
+                        UIHealthBar tempHealthBar = GameObject.Instantiate(healthBarPrefab, transform).GetComponent<UIHealthBar>();
+                        PlayerData tempPlayer = temp.GetComponent<PlayerData>();
+
+                        tempPlayer.myHealthBar = tempHealthBar;
+                        tempHealthBar.target = tempPlayer.transform;
+                        tempHealthBar.SetColor(Color.cyan);
+
+                        tempPlayer.curTile = spawnPointsPlayer1[currentSpawnIndex1].closestTile;
+                        tempPlayer.playerNum = 0;
+//                    PlayerManager.gPlayer.firstPlayers.Add(temp);
+                        spawnPointsPlayer1[currentSpawnIndex1].closestTile.occupyingObj = temp;
+                        currentSpawnIndex1++;
+
+                        tempPlayer.Initialize(pm, 0);
+                    }
+                }
+
+                if (currentSpawnIndex2 < maxSpawnIndex2)
+                {
+                    if (player2SelectedMechsID[i] >= 0)
+                    {
+                        GameObject temp = MechIDConst.SpawnMech(
+                                          spawnPointsPlayer2[currentSpawnIndex2].transform.position, 
+                                          spawnPointsPlayer2[currentSpawnIndex2].transform.rotation,
+                                          MechSaveData.LoadMech(playerProfiles[player2ProfileID], player2MechNames[player2SelectedMechsID[i]]), true);
+
+                        UIHealthBar tempHealthBar = GameObject.Instantiate(healthBarPrefab, transform).GetComponent<UIHealthBar>();
+                        PlayerData tempPlayer = temp.GetComponent<PlayerData>();
+
+                        tempPlayer.myHealthBar = tempHealthBar;
+                        tempHealthBar.target = tempPlayer.transform;
+                        tempHealthBar.SetColor(Color.red);
+
+                        tempPlayer.curTile = spawnPointsPlayer2[currentSpawnIndex2].closestTile;
+                        tempPlayer.playerNum = 1;
+//                    PlayerManager.gPlayer.secondPlayers.Add(temp);
+                        spawnPointsPlayer2[currentSpawnIndex2].closestTile.occupyingObj = temp;
+                        currentSpawnIndex2++;
+
+                        tempPlayer.Initialize(pm, 1);
+                    }
+                }
+            }
+
+            gamePlayUI.SetActive(true);
+            pm.enabled = true;
+            pm.SpawnDone();
+            UIprefab.SetActive(false);
 
 
-        go.GetComponent<TurnManager>().enabled = true;
-        go.GetComponent<PlayerMovement>().enabled = true;
-
-
-
-
+            go.GetComponent<TurnManager>().enabled = true;
+            go.GetComponent<PlayerMovement>().enabled = true;
+        }
     }
         
     void Awake () 

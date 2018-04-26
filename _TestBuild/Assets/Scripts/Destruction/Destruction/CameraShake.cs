@@ -35,7 +35,7 @@ public class CameraShake : MonoBehaviour
                 xShake *= magnitude * damper;
                 yShake *= magnitude * damper;
 
-            Camera.main.transform.position = new Vector3(xShake - 4, yShake + 4, startPos.z);
+            Camera.main.transform.position = new Vector3(xShake - 5, yShake + 5, startPos.z);
                 yield return null;
             }
         Camera.main.transform.position = startPos;

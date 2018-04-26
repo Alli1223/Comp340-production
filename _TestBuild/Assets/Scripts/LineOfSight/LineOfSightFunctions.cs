@@ -10,23 +10,36 @@ public static class LineOfSightFunctions
         List<Vector3> p1Corners = _TileCorners(p1);
         Vector3 p2 = new Vector3(theirPos.x, 0, theirPos.z);
         List<Vector3> p2Corners = _TileCorners(p2);
-        int layerMask = LayerMask.GetMask("coverLayer");
+        int layerMask = LayerMask.GetMask("coverCollider");
 
         int successCount = 0;
-        for (int x = 0; x < p1Corners.Count; x++)
+        int p1Counter = p1Corners.Count;
+        int p2Counter = p2Corners.Count;
+        List<Vector3> p1Suc = new List<Vector3>();
+        List<Vector3> p2Suc = new List<Vector3>();
+
+        for (int x = 0; x < p1Counter; x++)
         {
-            for (int y = 0; y < p2Corners.Count; y++)
+            for (int y = 0; y < p2Counter; y++)
             {
                 if (p1Corners[x] == p2Corners[y])
                 {
                     p1Corners.Remove(p1Corners[x]);
-                    p2Corners.Remove(p1Corners[y]);
+                    p2Corners.Remove(p2Corners[y]);
+                    p1Counter -= 1;
+                    p2Counter -= 1;
+                    if(x>0)
+                    x -= 1;
+                    if(y>0)
+                    y -= 1;
                 }
                 else
                 {
                     float dist = Vector3.Distance(p1Corners[x], p2Corners[y]);
                     if(Physics.Raycast(p1Corners[x], p2Corners[y] - p1Corners[x], dist, layerMask))
                     {
+                        p1Suc.Add(p1Corners[x]);
+                        p2Suc.Add(p2Corners[y]);
                         successCount++;
                     }
 //                    Debug.DrawRay(p1Corners[x], p2Corners[y] - p1Corners[x], Color.red, 200);

@@ -2,8 +2,8 @@
 using System.Collections;
 
 
-//rigidbody kinematic
-//trigger on 
+//rigidbody on kinematic
+//trigger on for mesh collider
 //destruction demo on building
 //dominos on building
 //set smoke effects
@@ -33,7 +33,7 @@ public class Dominos : MonoBehaviour
    // private Vector3 DomRotTarget = new Vector3(90, 0, 0);
     float x;
     float y;
-
+     
     private void Update()
     {
 
@@ -43,19 +43,85 @@ public class Dominos : MonoBehaviour
     {
         if ((other.gameObject.tag == "Building") || (other.gameObject.name == "rubble(Clone)"))
         {
-            Debug.Log("col");
-            StartCoroutine(DominosFall());
-            DestroyBuild();
+            DestroyBuild(); //works if here
+            this.gameObject.transform.rotation = Quaternion.Euler(0, 0, -25);
+            if (fallDir.fallDir == Directions.North)
+            {
+                Debug.Log("col");
+                StartCoroutine(DominosFallNorth());
+                DestroyBuild();
+            }
+            else if (fallDir.fallDir == Directions.East)
+            {
+                Debug.Log("col");
+                StartCoroutine(DominosFallEast());
+                DestroyBuild();
+            }
+            else if (fallDir.fallDir == Directions.South)
+            {
+                Debug.Log("col");
+                StartCoroutine(DominosFallSouth());
+                DestroyBuild();
+            }
+            else if (fallDir.fallDir == Directions.West)
+            {
+                Debug.Log("col");
+                StartCoroutine(DominosFallWest());
+                DestroyBuild();
+            }
+            else
+            {
+                DestroyBuild();
+                Debug.Log("no direction");
+            }
         }
     }
     
-    IEnumerator DominosFall()
+    IEnumerator DominosFallNorth()
     {
         yield return new WaitForSeconds(0.5f);
         Debug.Log("fall");
         x += Time.deltaTime * 100;
-        this.transform.rotation = Quaternion.Euler(0, 0, -25);
-       // y -= Time.deltaTime * 1;
+        this.transform.rotation = Quaternion.Euler(0, 0, -25 * Time.deltaTime);
+        yield return new WaitForSeconds(0.2f);
+        this.transform.rotation = Quaternion.Euler(0, 0, -15 * Time.deltaTime);
+        // y -= Time.deltaTime * 1;
+        //this.transform.position = Vector3 (0, y, 0);
+    }
+
+    IEnumerator DominosFallEast()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("fall");
+        x += Time.deltaTime * 100;
+        this.transform.rotation = Quaternion.Euler(-25 * Time.deltaTime, 0, 0);
+        yield return new WaitForSeconds(0.2f);
+        this.transform.rotation = Quaternion.Euler(-15 * Time.deltaTime, 0, 0);
+        // y -= Time.deltaTime * 1;
+        //this.transform.position = Vector3 (0, y, 0);
+    }
+
+    IEnumerator DominosFallSouth()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("fall");
+        x += Time.deltaTime * 100;
+        this.transform.rotation = Quaternion.Euler(0, 0, 25 * Time.deltaTime);
+        yield return new WaitForSeconds(0.2f);
+        this.transform.rotation = Quaternion.Euler(0, 0, 15 * Time.deltaTime);
+        // y -= Time.deltaTime * 1;
+        //this.transform.position = Vector3 (0, y, 0);
+    }
+
+    IEnumerator DominosFallWest()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("fall");
+        x += Time.deltaTime * 100;
+        this.transform.rotation = Quaternion.Euler(-25 * Time.deltaTime, 0, 0);
+        yield return new WaitForSeconds(0.2f);
+        this.transform.rotation = Quaternion.Euler(-15 * Time.deltaTime, 0, 0);
+        // y -= Time.deltaTime * 1;
         //this.transform.position = Vector3 (0, y, 0);
     }
 
@@ -63,7 +129,7 @@ public class Dominos : MonoBehaviour
     {
         if (Physics.CheckBox(transform.position, boxRadius))
         {
-                Destroy(this.gameObject, 1.3f);
+                Destroy(this.gameObject, 1.0f);
                 Debug.Log("dominos");
                 StartCoroutine(DominoRubble());
             //smokeThree.gameObject.SetActive(true);

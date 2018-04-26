@@ -13,6 +13,13 @@ public class UIGamePlay : MonoBehaviour
 
     public GameObject weaponPanel;
 
+    public Text textWeaponName;
+    public Text textRange;
+    public Text textDamage;
+    public Text textAPCost;
+    public Text textAccuracy;
+    public Text textAccuracyInput;
+
 	void OnEnable () 
     {
         ManagersManager.manager.tPlayer.gamePlayUI = this;
@@ -31,9 +38,41 @@ public class UIGamePlay : MonoBehaviour
         apText.text = string.Format("{0} / {1}", currentMech.curAP, currentMech.maxAP);
     }
 
-    public void SelectWeapon(int id)
+    public void ShowWeaponStats(int wepID)
     {
-        //ManagersManager.manager.tPlayer
+        Weapon currentWeapon = currentMech.GetWeapon(wepID);
+        bool weaponHasAccuracy = currentMech.WeaponTargetsDirectly(wepID);
+
+        textWeaponName.text = currentWeapon.name;
+
+        if (currentWeapon.minRange > 0)
+        {
+            textRange.text = string.Format("{0} - {1}", currentWeapon.minRange, currentWeapon.maxRange);
+        }
+        else
+            textRange.text = currentWeapon.maxRange.ToString();
+
+        textDamage.text = string.Format("{0} - {1}", currentWeapon.minDamage, currentWeapon.maxRange);
+
+        textAPCost.text = currentWeapon.apCost.ToString();
+
+        if (weaponHasAccuracy)
+        {
+            textAccuracy.text = "Accuracy:";
+            textAccuracyInput.text = string.Format("{0}%", currentWeapon.accuracy);
+        }
+        else
+        {
+            textAccuracy.text = "Scatter:";
+            textAccuracyInput.text = currentWeapon.scatter.ToString() + " Tiles";
+        }
+
+        weaponPanel.SetActive(true);
+    }
+
+    public void HideWeaponStats()
+    {
+        weaponPanel.SetActive(false);
     }
         
 }

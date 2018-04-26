@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerData : MonoBehaviour {
+public class PlayerData : MonoBehaviour 
+{
 
+
+    public MechIDConst mechID;
+    public MechVisualAgent visualAgent;
 	//Player identifiers 
 	public int playerNum;
 	public int uniqueID;
@@ -13,7 +17,7 @@ public class PlayerData : MonoBehaviour {
 	public int maxAP;
 	public int maxHealth;
 	public int maxMoveDist;
-	public int curAP;
+    public int curAP;
 	public int curHealth;		
 	public int curMoveDist;
 	public Tile curTile;
@@ -25,6 +29,10 @@ public class PlayerData : MonoBehaviour {
 	public Weapon rightArmWeapon;
 	public Weapon leftArmWeapon;
 	public Weapon backWeapon;
+
+    public int rightArmWeaponType;
+    public int leftArmWeaponType;
+    public int backWeaponType;
 
     public bool rightArmWeaponFired = false;
     public bool leftArmWeaponFired = false;
@@ -52,6 +60,20 @@ public class PlayerData : MonoBehaviour {
         }
     }
 
+    public void TakeDelayedDamage(int damage, float time)
+    {
+        StartCoroutine(TakeDelayedDamageCoroutine(damage, time));
+    }
+
+    IEnumerator TakeDelayedDamageCoroutine(int damage, float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        TakeDamage(damage);
+
+        yield break;
+    }
+       
     public void TakeDamage(int damage)
     {
         curHealth -= damage;
@@ -134,19 +156,23 @@ public class PlayerData : MonoBehaviour {
     public void FireWeapon(int wepID, PlayerData target)
     {
         Weapon weaponUsed;
+        int weaponType;
         if (wepID == 0 && !leftArmWeaponFired)
         {
             weaponUsed = leftArmWeapon;
+            weaponType = mechID.data.weaponArmLType;
             leftArmWeaponFired = true;
         }
         else if (wepID == 1 && !rightArmWeaponFired)
         {
             weaponUsed = rightArmWeapon;
+            weaponType = mechID.data.weaponArmRType;
             rightArmWeaponFired = true;
         }
         else if (wepID == 2 && !backWeaponFired)
         {
             weaponUsed = backWeapon;
+            weaponType = mechID.data.weaponGimbalLType;
             backWeaponFired = true;
         }
         else
@@ -155,10 +181,64 @@ public class PlayerData : MonoBehaviour {
             return;
         }
 
+        curAP -= weaponUsed.apCost;
+
+        WeaponFiringTypes.shooterWeaponID = wepID;
+        WeaponFiringTypes.FireWeapon(weaponUsed, weaponType, target, visualAgent.GetParticleInfo(wepID));
+    }
+
+    public bool HasWeaponFired(int wepID)
+    {
+        if (wepID == 0 && !leftArmWeaponFired)
+        {
+            return leftArmWeaponFired;
+        }
+        else if (wepID == 1 && !rightArmWeaponFired)
+        {
+            return rightArmWeaponFired;
+        }
+        else if (wepID == 2 && !backWeaponFired)
+        {
+            return backWeaponFired;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public void FireWeapon(int wepID, Tile target)
+    {
+        Weapon weaponUsed;
+        int weaponType;
+        if (wepID == 0 && !leftArmWeaponFired)
+        {
+            weaponUsed = leftArmWeapon;
+            weaponType = mechID.data.weaponArmLType;
+            leftArmWeaponFired = true;
+        }
+        else if (wepID == 1 && !rightArmWeaponFired)
+        {
+            weaponUsed = rightArmWeapon;
+            weaponType = mechID.data.weaponArmRType;
+            rightArmWeaponFired = true;
+        }
+        else if (wepID == 2 && !backWeaponFired)
+        {
+            weaponUsed = backWeapon;
+            weaponType = mechID.data.weaponGimbalLType;
+            backWeaponFired = true;
+        }
+        else
+        {
+            Debug.LogWarning("This weapon cannot be fired");
+            return;
+        }
 
         curAP -= weaponUsed.apCost;
 
-        target.TakeDamage(weaponUsed.maxDamage);
+        WeaponFiringTypes.shooterWeaponID = wepID;
+        WeaponFiringTypes.FireWeapon(weaponUsed, weaponType, target, visualAgent.GetParticleInfo(wepID));
     }
 
     public int GetWeaponMaxRange(int wepID)
@@ -169,6 +249,36 @@ public class PlayerData : MonoBehaviour {
             return rightArmWeapon.maxRange;
         else if (wepID == 2)
             return backWeapon.maxRange;
+        else
+        {
+            Debug.LogError("Invalid ID for weapon: " + wepID + " - Expected 0 - 2");
+            return 0;
+        }
+    }
+
+    public int GetWeaponMinRange(int wepID)
+    {
+        if (wepID == 0)
+            return leftArmWeapon.minRange;
+        else if (wepID == 1)
+            return rightArmWeapon.minRange;
+        else if (wepID == 2)
+            return backWeapon.minRange;
+        else
+        {
+            Debug.LogError("Invalid ID for weapon: " + wepID + " - Expected 0 - 2");
+            return 0;
+        }
+    }
+
+    public int GetWeaponScatter(int wepID)
+    {
+        if (wepID == 0)
+            return leftArmWeapon.scatter;
+        else if (wepID == 1)
+            return rightArmWeapon.scatter;
+        else if (wepID == 2)
+            return backWeapon.scatter;
         else
         {
             Debug.LogError("Invalid ID for weapon: " + wepID + " - Expected 0 - 2");
@@ -193,17 +303,44 @@ public class PlayerData : MonoBehaviour {
 
     void Death()
     {
-        if (playerNum == 0)
-        {
-            ManagersManager.manager.tPlayer.currentPlayers.Remove(gameObject);
-        }
+            PlayerManager.gPlayer.currentPlayers.Remove(this.gameObject);
+            PlayerManager.gPlayer.allPlayerMechs[playerNum].Remove(this);
+        curTile.occupyingObj = null;
         myHealthBar.gameObject.SetActive(false);
         gameObject.SetActive(false);
+		EndScreenManager.Instance.Playercheck ();
     }
         
     public void Initialize(PlayerManager playerManager, int playerID)
     {
         playerManager.allPlayerMechs[playerID].Add(this);
         playerManager.currentPlayers.Add(this.gameObject);
+    }
+
+    public bool WeaponTargetsDirectly(int wepID)
+    {
+        int weaponType;
+        if (wepID == 0 && !leftArmWeaponFired)
+        {
+            weaponType = mechID.data.weaponArmLType;
+        }
+        else if (wepID == 1 && !rightArmWeaponFired)
+        {
+            weaponType = mechID.data.weaponArmRType;
+        }
+        else if (wepID == 2 && !backWeaponFired)
+        {
+            weaponType = mechID.data.weaponGimbalLType;
+        }
+        else
+        {
+            Debug.LogWarning("This weapon is not equipped");
+            return false;
+        }
+
+        if (weaponType == 2 || weaponType == 3)
+            return false;
+        else
+            return true;
     }
 }

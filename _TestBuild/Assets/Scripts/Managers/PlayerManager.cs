@@ -36,7 +36,15 @@ public class PlayerManager : MonoBehaviour
     public bool shootingMode = false;
 
     Transform tileHighlighter;
+    Transform tilePlayerHighlighter;
     public GameObject tileHighlighterPrefab;
+    public GameObject tilePlayerHighlightPrefab;
+    [HideInInspector]
+    public Vector3 mousePosOnGrid;
+
+    public GameObject gridHolder;
+
+    bool lockInput;
 
     //Makes Grid gen script a singleton
     void Awake()
@@ -55,8 +63,10 @@ public class PlayerManager : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
         tileHighlighter = GameObject.Instantiate(tileHighlighterPrefab).transform;
+        tilePlayerHighlighter = GameObject.Instantiate(tilePlayerHighlightPrefab).transform;
         PlayerUniqueIDAssignment();
         currentSelectedPlayer = -1;
+        gamePlayUI.HideWeaponStats();
         EndTurn();
     }
 
@@ -65,13 +75,33 @@ public class PlayerManager : MonoBehaviour
         tManage.tPlayer = gPlayer;
 	}
 
+    public static void StartCinematic(float cinematicTime)
+    {
+        gPlayer.LockPlayerInput();
+
+        gPlayer.Invoke("UnlockPlayerInput", cinematicTime);
+    }
+
+    void LockPlayerInput()
+    {
+        gPlayer.lockInput = true;
+        gPlayer.gridHolder.SetActive(false);
+        gPlayer.tileHighlighter.gameObject.SetActive(false);
+        gPlayer.tilePlayerHighlighter.gameObject.SetActive(false);
+    }
+
+    void UnlockPlayerInput()
+    {
+        gPlayer.lockInput = false;
+        gPlayer.gridHolder.SetActive(true);
+        gPlayer.tileHighlighter.gameObject.SetActive(true);
+        gPlayer.tilePlayerHighlighter.gameObject.SetActive(true);
+    }
+
 
     void SelectMech(GameObject desiredObject)
     {
-        playerDat = desiredObject.GetComponent<PlayerData>();
-        currentMech = playerDat;
-        gamePlayUI.SetMech(playerDat);
-        playerMovement.SetPlayer();
+        SelectMech(desiredObject.GetComponent<PlayerData>());
     }
 
     void SelectMech(PlayerData desiredMech)
@@ -80,14 +110,19 @@ public class PlayerManager : MonoBehaviour
         currentMech = playerDat;
         gamePlayUI.SetMech(desiredMech);
         playerMovement.SetPlayer();
+        UpdateCurrentMechPos();
+        gamePlayUI.HideWeaponStats();
+		tManage.tCamManage.changeCamera ();
     }
 
     void SelectMech(int playerID, int mechID)
     {
-        playerDat = allPlayerMechs[currentSelectedPlayer][mechID];
-        currentMech = playerDat;
-        gamePlayUI.SetMech(playerDat);
-        playerMovement.SetPlayer();
+        SelectMech(allPlayerMechs[currentSelectedPlayer][mechID]);
+    }
+
+    public void UpdateCurrentMechPos()
+    {
+        tilePlayerHighlighter.transform.position = playerDat.curTile.tPos + new Vector3 (0f,0.02f, 0f);
     }
 
 
@@ -120,15 +155,11 @@ public class PlayerManager : MonoBehaviour
     {
         if (clickedTile.occupyingObj != null)
         {
-            //clickedTile.isVisiable = true;
             PlayerData occupyingMech = clickedTile.occupyingObj.GetComponent<PlayerData>();
 
-            if (!occupyingMech.isOutOfActions)
+            if (!occupyingMech.isOutOfActions && occupyingMech.playerNum == currentSelectedPlayer)
             {
-                playerDat = occupyingMech;
-                currentMech = playerDat;
-                gamePlayUI.SetMech(playerDat);
-                playerMovement.SetPlayer();
+                SelectMech(occupyingMech);
             }
         }
     }
@@ -180,30 +211,34 @@ public class PlayerManager : MonoBehaviour
 
     public void Update()
     {
-        RaycastHit hit;
-        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 50f, gridLayer.value);
-        if (hit.transform != null)
+        if (!lockInput)
         {
-            Tile highligthedTile = GridExtentions.GetClosestGrid(hit.point, GridGeneration.gridSingle.tileVariables);
-            tileHighlighter.position = highligthedTile.tPos + Vector3.up * 0.01f;
+            RaycastHit hit;
+            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 50f, gridLayer.value);
+            if (hit.transform != null)
+            {
+                mousePosOnGrid = hit.point;
+                Tile highligthedTile = GridExtentions.GetClosestGrid(mousePosOnGrid, GridGeneration.gridSingle.tileVariables);
+                tileHighlighter.position = highligthedTile.tPos + Vector3.up * 0.01f;
                     
-            if (Input.GetMouseButtonDown(0))
-            {
-                SelectMech(highligthedTile);
-            }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    SelectMech(highligthedTile);
+                }
         
-            if (Input.GetMouseButtonDown(1) && currentMech != null)
-            {
-                GetComponent<PlayerMovement>().UpdateMe(highligthedTile, PlayerMovement.PlayerActions.Move);
+                if (Input.GetMouseButtonDown(1) && currentMech != null)
+                {
+                    GetComponent<PlayerMovement>().UpdateMe(highligthedTile, PlayerMovement.PlayerActions.Move);
+                }
             }
-        }
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            GoToNextActiveUnit();
-        }
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            EndTurn();
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                GoToNextActiveUnit();
+            }
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                EndTurn();
+            }
         }
 
     }

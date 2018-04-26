@@ -66,6 +66,7 @@ public class TurnManager : MonoBehaviour
 
         if (waitingForAction.Count == 0)
         {
+			GetComponent<EndScreenManager>().Playercheck ();
             ManagersManager.manager.tPlayer.EndTurn();
         }
         else

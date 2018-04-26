@@ -12,7 +12,7 @@ public class DamageDirection : MonoBehaviour {
     public static Vector3 west;
     public static Vector3 north;
     public static Vector3 south;
-    public Vector3 fallDir = Directions.West;
+    public Vector3 fallDir;// = Directions.North;
 
     public static Vector3 attackDirection()
     {
@@ -28,7 +28,7 @@ public class DamageDirection : MonoBehaviour {
     /// <param name="initialObjPos">The building or object you wish to modify</param>
     /// <param name="secondaryObjPos">The Player or object you wish to modify</param>
     /// <returns></returns>
-    static coverDirection ComparitiveDirection(Vector3 initialObjPos, Vector3 secondaryObjPos)
+    public static coverDirection ComparitiveDirection(Vector3 initialObjPos, Vector3 secondaryObjPos)
     {
 
         Vector3 dir = (secondaryObjPos - initialObjPos);//current mech
@@ -66,7 +66,7 @@ public class DamageDirection : MonoBehaviour {
     /// <param name="objPosition">The position of the object you want an adjusted position of</param>
     /// <param name="posDir">The direction you want the object to move to</param>
     /// <returns></returns>
-    static Vector3 CustomDirection(Vector3 objPosition, coverDirection posDir)
+    public static Vector3 CustomDirection(Vector3 objPosition, coverDirection posDir)
     {
         if (posDir == coverDirection.North)
         {

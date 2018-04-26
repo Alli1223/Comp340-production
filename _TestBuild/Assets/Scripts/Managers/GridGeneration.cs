@@ -448,7 +448,8 @@ public class GridGeneration : MonoBehaviour
                 float dist = Vector3.Distance(top, bot);
                 xCollide = x.GetComponentInChildren<BoxCollider>();
                 xCollide.center = new Vector3(0,bMesh.bounds.extents.y,0);
-                xCollide.size = new Vector3((halfSize * 2), dist, (halfSize * 2));
+                xCollide.size = new Vector3(((halfSize * 2) / 1.4f), dist, ((halfSize * 2) / 1.4f));
+                xCollide.transform.rotation = Quaternion.Euler(0, 45, 0);
             }
         }
         build.Clear();

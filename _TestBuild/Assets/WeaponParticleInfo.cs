@@ -6,8 +6,18 @@ public class WeaponParticleInfo : MonoBehaviour
 {
 
 	public GameObject[] prefabs;
-	private ParticleSystem[] particleSystems;
+    protected ParticleSystem[] particleSystems;
 	public Transform[] spawnPoints;
+
+    public Transform projectileSpawn;
+
+    public GameObject projectilePrefab;
+    public float cinematicLength;
+    public float[] projectileSpawnTime;
+
+    [HideInInspector]
+    public Vector3 cinematicTarget;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -24,13 +34,35 @@ public class WeaponParticleInfo : MonoBehaviour
 		}
 	}
 
-	public void Fire()
+    public void Fire()
 	{
 		for(int i = 0; i < particleSystems.Length; i++)
 		{
 			particleSystems [i].Play ();
 		}
+        currentProjectile = 0;
+        fireTime = 0f;
 	}
+
+    protected float fireTime = 50000f;
+    protected int currentProjectile;
+
+    protected virtual void Update()
+    {
+        if (fireTime < cinematicLength)
+        {
+            if (currentProjectile < projectileSpawnTime.Length)
+            {
+                if (projectileSpawnTime[currentProjectile] <= fireTime)
+                {
+                    GameObject.Instantiate(projectilePrefab, projectileSpawn.position, projectileSpawn.rotation).GetComponent<WeaponProjectile>().SetTarget(cinematicTarget);
+                    currentProjectile++;
+                }
+            }
+
+            fireTime += Time.deltaTime;
+        }
+    }
 	
 
 }

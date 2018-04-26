@@ -46,6 +46,14 @@ public class CustomisationUI : MonoBehaviour
     GameObject[] spawnedColorButtons = new GameObject[0];
     public GameObject colorMenu;
 
+    public Text textWeaponName;
+    public Text textRange;
+    public Text textDamage;
+    public Text textAPCost;
+    public Text textAccuracy;
+    public Text textSplash;
+    public Text textAccuracyLabel;
+
     public void Start()
     {
         GenerateColorPickerButtons();
@@ -137,6 +145,7 @@ public class CustomisationUI : MonoBehaviour
         {
             FillAvailableWeapons();
             partTabIndicator.position = weaponTabs[tab].position;
+            UpdateWeaponStats(currentMech.GetComponent<PlayerData>());
         }
 
     }
@@ -255,6 +264,68 @@ public class CustomisationUI : MonoBehaviour
         }
     }
 
+    void UpdateWeaponStats(PlayerData pd)
+    {
+        bool weaponEquipped = true;
+
+        if (currentTab == 0)
+        {
+            if (pd.leftArmWeaponType == -1)
+                weaponEquipped = false;
+        }
+        else if (currentTab == 1)
+        {
+            if (pd.rightArmWeaponType == -1)
+                weaponEquipped = false;
+        }
+        else if (currentTab == 2)
+        {
+            if (pd.backWeaponType == -1)
+                weaponEquipped = false;
+        }
+
+        if (weaponEquipped)
+        {
+
+            Weapon currentWeapon = pd.GetWeapon(currentTab);
+            textWeaponName.text = currentWeapon.name;
+
+            if (currentWeapon.minRange > 0)
+            {
+                textRange.text = string.Format("{0} - {1}", currentWeapon.minRange, currentWeapon.maxRange);
+            }
+            else
+                textRange.text = currentWeapon.maxRange.ToString();
+
+            textDamage.text = string.Format("{0} - {1}", currentWeapon.minDamage, currentWeapon.maxDamage);
+
+            textAPCost.text = currentWeapon.apCost.ToString();
+
+            if (pd.WeaponTargetsDirectly(currentTab))
+            {
+                textAccuracyLabel.text = "Accuracy:";
+                textAccuracy.text = currentWeapon.accuracy.ToString();
+            }
+            else
+            {
+                textAccuracyLabel.text = "Scatter:";
+                textAccuracy.text = currentWeapon.scatter.ToString();
+            }
+
+            textSplash.text = currentWeapon.splashRadius.ToString();
+        }
+        else
+        {
+            textWeaponName.text = "Unequipped";
+            textRange.text = " - ";
+            textDamage.text = " - ";
+            textAPCost.text = " - ";
+            textAccuracy.text = " - ";
+            textAccuracyLabel.text = "Accuracy:";
+            textSplash.text = " - ";
+        }
+    }
+
     void FillAvailableParts()
     {
         for (int i = 0; i < spawnedButtons.Length; i++)
@@ -320,14 +391,18 @@ public class CustomisationUI : MonoBehaviour
         {
             case 0:
                 mechData.hasWeaponL = false;
+                mechData.weaponArmLType = -1;
                 break;
             case 1:
+                mechData.weaponArmRType = -1;
                 mechData.hasWeaponR = false;
                 break;
             case 2:
+                mechData.weaponGimbalLType = -1;
                 mechData.hasWeaponGimbalL = false;
                 break;
             case 3:
+                mechData.weaponGimbalRType = -1;
                 mechData.hasWeaponGimbalR = false;
                 break;
         }
@@ -405,6 +480,7 @@ public class CustomisationUI : MonoBehaviour
         UpdatePartText();
         UpdateStatsPanel();
         UpdateWeaponText();
+        UpdateWeaponStats(currentMech.GetComponent<PlayerData>());
     }
 
 

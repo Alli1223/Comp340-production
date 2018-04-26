@@ -1,0 +1,215 @@
+fileFormatVersion: 2
+guid: a10dec2331340cc4c87f980e5f106c72
+timeCreated: 1519220741
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Connector_HD
+    100002: ConnectorArm_L
+    100004: ConnectorArm_R
+    100006: Empty
+    100008: //RootNode
+    100010: Gimbal_L
+    100012: X
+    100014: Connector_L
+    100016: Connector_R
+    100018: Connector_UT
+    100020: Cube.001
+    100022: Cube.003
+    100024: _mesh_Foot_L
+    100026: _mesh_Foot_R
+    100028: _mesh_LowerArm_L
+    100030: _mesh_LowerArm_R
+    100032: _mesh_LowerLeg_L
+    100034: _mesh_LowerLeg_R
+    100036: _mesh_UpperArm_L
+    100038: _mesh_UpperArm_R
+    100040: _mesh_UpperLeg_L
+    100042: _mesh_UpperLeg_R
+    100044: Head
+    100046: LowerTorso
+    100048: UpperTorso
+    100050: W_L
+    100052: W_R
+    100054: UpperTorso.001
+    100056: UpperTorso.002
+    100058: W
+    400000: Connector_HD
+    400002: ConnectorArm_L
+    400004: ConnectorArm_R
+    400006: Empty
+    400008: //RootNode
+    400010: Gimbal_L
+    400012: X
+    400014: Connector_L
+    400016: Connector_R
+    400018: Connector_UT
+    400020: Cube.001
+    400022: Cube.003
+    400024: _mesh_Foot_L
+    400026: _mesh_Foot_R
+    400028: _mesh_LowerArm_L
+    400030: _mesh_LowerArm_R
+    400032: _mesh_LowerLeg_L
+    400034: _mesh_LowerLeg_R
+    400036: _mesh_UpperArm_L
+    400038: _mesh_UpperArm_R
+    400040: _mesh_UpperLeg_L
+    400042: _mesh_UpperLeg_R
+    400044: Head
+    400046: LowerTorso
+    400048: UpperTorso
+    400050: W_L
+    400052: W_R
+    400054: UpperTorso.001
+    400056: UpperTorso.002
+    400058: W
+    2300000: Connector_HD
+    2300002: ConnectorArm_L
+    2300004: ConnectorArm_R
+    2300006: //RootNode
+    2300008: Gimbal_L
+    2300010: X
+    2300012: Connector_L
+    2300014: Connector_R
+    2300016: Connector_UT
+    2300018: Cube.001
+    2300020: Cube.003
+    2300022: _mesh_Foot_L
+    2300024: _mesh_Foot_R
+    2300026: _mesh_LowerArm_L
+    2300028: _mesh_LowerArm_R
+    2300030: _mesh_LowerLeg_L
+    2300032: _mesh_LowerLeg_R
+    2300034: _mesh_UpperArm_L
+    2300036: _mesh_UpperArm_R
+    2300038: _mesh_UpperLeg_L
+    2300040: _mesh_UpperLeg_R
+    2300042: Head
+    2300044: LowerTorso
+    2300046: UpperTorso
+    2300048: UpperTorso.001
+    2300050: UpperTorso.002
+    3300000: Connector_HD
+    3300002: ConnectorArm_L
+    3300004: ConnectorArm_R
+    3300006: //RootNode
+    3300008: Gimbal_L
+    3300010: X
+    3300012: Connector_L
+    3300014: Connector_R
+    3300016: Connector_UT
+    3300018: Cube.001
+    3300020: Cube.003
+    3300022: _mesh_Foot_L
+    3300024: _mesh_Foot_R
+    3300026: _mesh_LowerArm_L
+    3300028: _mesh_LowerArm_R
+    3300030: _mesh_LowerLeg_L
+    3300032: _mesh_LowerLeg_R
+    3300034: _mesh_UpperArm_L
+    3300036: _mesh_UpperArm_R
+    3300038: _mesh_UpperLeg_L
+    3300040: _mesh_UpperLeg_R
+    3300042: Head
+    3300044: LowerTorso
+    3300046: UpperTorso
+    3300048: UpperTorso.001
+    3300050: UpperTorso.002
+    4300000: Cube.002
+    4300002: Connector_HD
+    4300004: ConnectorArm_L
+    4300006: ConnectorArm_R
+    4300008: Gimbal_L
+    4300010: X
+    4300012: Cube.003
+    4300014: Connector_L
+    4300016: Connector_R
+    4300018: Connector_UT
+    4300020: Cube.001
+    4300022: Head
+    4300024: LowerTorso
+    4300026: UpperTorso
+    4300028: _mesh_UpperLeg_R
+    4300030: _mesh_LowerLeg_R
+    4300032: _mesh_Foot_R
+    4300034: _mesh_UpperArm_R
+    4300036: _mesh_LowerArm_R
+    4300038: _mesh_UpperLeg_L
+    4300040: _mesh_LowerLeg_L
+    4300042: _mesh_Foot_L
+    4300044: _mesh_UpperArm_L
+    4300046: _mesh_LowerArm_L
+    4300048: UpperTorso.001
+    4300050: UpperTorso.002
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

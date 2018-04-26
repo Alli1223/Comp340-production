@@ -26,6 +26,11 @@ public class MechVisualAgent : MonoBehaviour
 
     public MechIDConst mechID;
 
+    public WeaponParticleInfo particleInfoArmL;
+    public WeaponParticleInfo particleInfoArmR;
+    public WeaponParticleInfo particleInfoGimbL;
+    public WeaponParticleInfo particleInfoGimbR;
+
     int bool_Move;
     int float_TurnDegree;
     int trigger_Turn;
@@ -46,6 +51,67 @@ public class MechVisualAgent : MonoBehaviour
             animLowerTorso.SetLayerWeight(1, 0f);
             animUpperTorso.SetLayerWeight(1, 0f);
         }
+    }
+
+    public float GetCinematicTimeOfWeapon(int weaponID)
+    {
+        float weaponCinematicTime = 0.25f;
+
+        if (weaponID == 0)
+        {
+            weaponCinematicTime += particleInfoArmL.cinematicLength;
+        }
+        else if (weaponID == 1)
+        {
+            weaponCinematicTime += particleInfoArmR.cinematicLength;
+        }
+        else if (weaponID == 2)
+        {
+            weaponCinematicTime += particleInfoGimbL.cinematicLength;
+        }
+
+        return weaponCinematicTime;
+    }
+        
+    bool trackTarget = false;
+    public void ResetTorso()
+    {
+        trackTarget = false;
+    }
+
+    void LateUpdate()
+    {
+        if (trackTarget)
+        {
+            upperTorsoParent.LookAt(aimTarget, Vector3.up);
+        }
+        else
+        {
+            upperTorsoParent.localRotation = Quaternion.Euler(Vector3.zero);
+        }
+    }
+
+    public void TorsoTwistAt(Vector3 pos)
+    {
+        aimTarget = pos;
+        trackTarget = true;
+    }
+
+    public void TorsoTwistAt(Vector3 pos, float time)
+    {
+        aimTarget = pos;
+        trackTarget = true;
+
+        StartCoroutine(ResetTorsoOnDelay(time));
+    }
+
+    IEnumerator ResetTorsoOnDelay(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        ResetTorso();
+
+        yield break;
     }
 
     public void SetAnimIDs()
@@ -80,36 +146,47 @@ public class MechVisualAgent : MonoBehaviour
         allRenderers = GetComponentsInChildren<Renderer>();
     }
 
-	public void FireWeapon(int id)
+    public void FireWeapon(int weaponID, float delay = 0.25f)
 	{
-		if (id == 0) {
-			if(animWeaponL != null)
-				animWeaponL.SetTrigger ("Shoot");
-		} else if (id == 1) {
-			if(animWeaponR != null)
-				animWeaponR.SetTrigger ("Shoot");
-		} else if (id == 2) {
-			if(animGimbalL != null)
-				animGimbalL.SetTrigger ("Shoot");
-		} else if (id == 3) {
-			if(animGimbalR != null)
-				animGimbalR.SetTrigger ("Shoot");
+		if (weaponID == 0) 
+        {
+            this.Invoke("CinematicFireArmL", delay);
+		} 
+        else if (weaponID == 1) 
+        {
+            this.Invoke("CinematicFireArmR", delay);
+		} 
+        else if (weaponID == 2) 
+        {
+            this.Invoke("CinematicFireGimbalL", delay);
+		} 
+        else if (weaponID == 3) 
+        {
+            this.Invoke("CinematicFireGimbalR", delay);
 		}
 	}
 
-//    void Update()
-//    {
-//        for (int i = 0; i < allRenderers.Length; i++)
-//        {
-//            if (allRenderers[i] != null)
-//            {
-//                allRenderers[i].material.SetColor("_Color1", mechColor[0]);
-//                allRenderers[i].material.SetColor("_Color2", mechColor[1]);
-//                allRenderers[i].material.SetColor("_Color3", mechColor[2]);
-//            }
-//        }
-//    }
+    Vector3 aimTarget;
 
+    void CinematicFireArmL()
+    {
+        animWeaponL.SetTrigger("Shoot");
+    }
+
+    void CinematicFireArmR()
+    {
+        animWeaponR.SetTrigger("Shoot");
+    }
+
+    void CinematicFireGimbalL()
+    {
+        animGimbalL.SetTrigger("Shoot");
+    }
+
+    void CinematicFireGimbalR()
+    {
+        animGimbalR.SetTrigger("Shoot");
+    }
 
     static string[] colorPropertyNames = new string[3] {"_Color1", "_Color2", "_Color3"};
 
@@ -123,5 +200,28 @@ public class MechVisualAgent : MonoBehaviour
                 allRenderers[i].material.SetColor(colorPropertyNames[colorType], mechColor[colorType]);
             }
         }
+    }
+
+    public WeaponParticleInfo GetParticleInfo(int weaponID)
+    {
+
+        if (weaponID == 0)
+        {
+            return particleInfoArmL;
+        }
+        else if (weaponID == 1)
+        {
+            return particleInfoArmR;
+        }
+        else if (weaponID == 2)
+        {
+            return particleInfoGimbL;
+        }
+        else if (weaponID == 3)
+        {
+            return particleInfoGimbR;
+        }
+        else
+            return null;
     }
 }

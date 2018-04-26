@@ -22,6 +22,7 @@ public class GridExtentions : MonoBehaviour
 
     public Material defaultTileMaterial;
     public Material shootingTileMaterial;
+    public Material splashTileMaterial;
 
     public static GridExtentions gridDetect;
     
@@ -106,21 +107,39 @@ public class GridExtentions : MonoBehaviour
         return bestResult;
     }
 
-    public static void SetMaterial(bool defaultMat)
+    public static void SetMaterial(int matID)
     {
         Material desiredMaterial = gridDetect.defaultTileMaterial;
 
         Tile[] allTiles = tManage.tGrid.tileVariables[0].All();
-        if (!defaultMat)
+        if (matID == 1)
         {
             desiredMaterial = gridDetect.shootingTileMaterial;
+        }
+        else if (matID == 2)
+        {
+            desiredMaterial = gridDetect.splashTileMaterial;
         }
             
         for (int i = 0; i < allTiles.Length; i++)
         {
-            allTiles[0].thisTile.GetComponent<MeshRenderer>().material = desiredMaterial;
+            allTiles[i].thisTile.GetComponent<MeshRenderer>().material = desiredMaterial;
         }
 
+    }
+
+    public static List<Tile> SetMaterialOverlay(int matID, Vector3 origin, int distance)
+    {
+        SetMaterial(matID);
+
+        List<Tile> tilesInRange = _TilesInARange(origin, distance);
+
+        for (int i = 0; i < tilesInRange.Count; i++)
+        {
+            tilesInRange[i].thisTile.GetComponent<MeshRenderer>().material = gridDetect.splashTileMaterial;
+        }
+
+        return tilesInRange;
     }
 
     /// <summary>
